@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry path="" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry path="C:/Documents and Settings/Administrator/바탕 화면/자바기반인공지능퀘스트/자료실/JessAll/fuzzyj110a/fuzzyJ110a.jar" kind="lib"/>
+	<classpathentry path="C:/Documents and Settings/Administrator/바탕 화면/자바기반인공지능퀘스트/자료실/JessAll/fuzzyj110a/sfc.jar" kind="lib"/>
+	<classpathentry path="C:/Documents and Settings/Administrator/바탕 화면/자바기반인공지능퀘스트/자료실/JessAll/fuzzyj110a/symbeans.jar" kind="lib"/>
+	<classpathentry path="" kind="output"/>
+</classpath>

@@ -1,0 +1,206 @@
+<html>
+<head>
+<title>Jess File I/O Functions</title>
+</head>
+<body>
+
+<h2>Jess File I/O Functions</h2>
+
+List of file input/output functions that can be executed by Jess.
+
+<P>
+<HR width=100%>
+
+
+<a name="close"><h4>8.31. (close [&lt;router-identifier&gt;])</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+One or more router identifiers (atoms)</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Closes any I/O routers associated with the given name by calling <tt>close()</tt>
+on the underlying stream, then removes the routers. Any subsequent attempt
+to use a closed router will report <tt>bad router</tt>. See <a href="#open">open</a>.</dd>
+</dl>
+
+<a name="format"><h4>8.60. (format &lt;router-identifier&gt; &lt;string-expression&gt; &lt;expression&gt;*)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+A router identifier, a format string, and zero or more arguments</dd>
+
+<dt>Returns:</dt><dd>
+A string</dd>
+
+<dt>Description:</dt><dd>
+Sends formatted output to the specified logical name. Formats the arguments
+into a string according to the format string, which is identical to that
+used by <tt>printf</tt> in the C language (find a C book for more information).
+Returns the string, and optionally prints the string to the named router.
+If you pass <tt>nil</tt> for the router name, no printing is done.</dd>
+</dl>
+
+
+
+<a name="get-multithreaded-io"><h4>8.64. (get-multithreaded-io)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Returns TRUE is Jess is currently using a separate thread to flush I/O
+streams. Turning this on can lead to a modest performance enhancement,
+at the expense of possible loss of output on program termination.
+</dd>
+</dl>
+
+
+
+<a name="open"><h4>8.101. (open &lt;file-name&gt; &lt;router-identifier&gt; [r|w|a])</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+A file name, an identifier for the file (an atom), and optionally a
+mode string, one of r, w, a.
+</dd>
+
+<dt>Returns:</dt><dd>
+The file identifier, a router name.
+</dd>
+
+<dt>Description:</dt><dd>
+Opens a file. Subsequently, the given router identifier can be passed to
+<a href="functions.html#printout"><tt>printout</tt></a>, <a href="functions.html#read"><tt>read</tt></a>, <a href="functions.html#readline"><tt>readline</tt></a>, or any other functions
+that accept I/O routers as arguments. By default, the file is opened for
+reading; if a mode string is given, it may be opened for reading only (<tt>r</tt>),
+writing only (<tt>w</tt>), or appending (<tt>a</tt>).
+ <p align=""/>
+<b><i>Note:</i></b> See the <a href="functions.html#batch"><tt>batch</tt></a> command for a
+discussion about specifying filenames in Jess.
+</dd>
+</dl>
+
+
+
+<a name="printout"><h4>8.108. (printout &lt;router-identifier&gt; &lt;expression&gt;*)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+A router identifier followed by zero or more expressions</dd>
+
+<dt>Returns:</dt><dd>
+nil</dd>
+
+<dt>Description:</dt><dd>
+Sends unformatted output to the specified logical name. Prints its arguments
+to the named router, which must be open for output. No spaces are added
+between arguments. The special atom <tt>crlf</tt> prints as a newline.
+The special router name <tt>t</tt> can be used to signify standard output.</dd>
+</dl>
+
+
+<a name="read"><h4>8.111. (read [&lt;router-identifier&gt;])</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+An optional input router identifier (when omitted t is the default)</dd>
+
+<dt>Returns:</dt><dd>
+(Varies)</dd>
+
+<dt>Description:</dt><dd>
+Reads a single-field value from a specified logical name. Read a single
+atom, string, or number from the named router, returns this value. The
+router <tt>t</tt> means standard input. Newlines are treated as ordinary
+whitespace; this behaviour is different than in CLIPS, which returns newlines
+as tokens. If you need to parse text line-by-line, use <a href="functions.html#readline"><tt>readline</tt></a>
+and <a href="functions.html#explode$"><tt>explode$</tt></a>. 
+</dd>
+</dl>
+
+
+
+<a name="readline"><h4>8.112. (readline [&lt;router-identifier&gt;])</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+An optional input router identifier (when omitted t is the default)</dd>
+
+<dt>Returns:</dt><dd>
+String</dd>
+
+<dt>Description:</dt><dd>
+Reads an entire line as a string from the specified logical name (router).
+The router <tt>t</tt> means standard input. 
+</dd>
+</dl>
+
+
+<a name="set-multithreaded-io"><h4>8.128. (set-multithreaded-io (TRUE | FALSE))</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Boolean</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Specify whether Jess should use a separate thread to flush I/O
+streams. Turning this on can lead to a modest performance enhancement,
+at the expense of possible loss of output on program
+termination. Returns the previous value of this property.
+</dd>
+</dl>
+
+
+
+
+<a name="socket"><h4>8.137. (socket &lt;Internet-hostname&gt; &lt;TCP-port-number&gt; &lt;router-identifier&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+An Internet hostname, a TCP port number, and a router identifier</dd>
+
+<dt>Returns:</dt><dd>
+The router identifier</dd>
+
+<dt>Description:</dt><dd>
+Somewhat equivalent to <a href="functions.html#open"><tt>open</tt></a>, except that instead
+of opening a file, opens an unbuffered TCP network connection to the named
+host at the named port, and installs it as a pair of read and write routers
+under the given name.</dd>
+</dl>
+
+
+
+<HR width=100%>
+
+</body>
+</html>

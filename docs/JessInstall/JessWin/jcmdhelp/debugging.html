@@ -1,0 +1,155 @@
+<html>
+<head>
+<title>Jess Debugging Functions</title>
+</head>
+<body>
+
+<h2>Jess Debugging Functions</h2>
+
+List of debugging functions that can be executed by Jess.
+
+<P>
+<HR width=100%>
+
+
+
+
+<a name="list-function$"><h4>8.79. (list-function$)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+Multifield</dd>
+
+<dt>Description:</dt><dd>
+Returns a multifield list of all the functions currently callable, including
+intrinsics, deffunctions, and Userfunctions. Each function name is an atom.
+The names are sorted in alphabetical order.
+</dd>
+</dl>
+
+
+<a name="matches"><h4>8.88. (matches &lt;lexeme-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+ViewFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One atom, a rule or query name</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Produces an ugly printout, useful for debugging, of the contents of the left
+and right Rete memories of each two-input node on the given rule or
+query's LHS.</dd>
+</dl>
+
+
+
+<a name="show-jess-listeners"><h4>8.136. (show-jess-listeners)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Scriptlib</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+nil</dd>
+
+<dt>Description:</dt><dd>
+Displays all <tt>JessListener</tt>s registered with the engine to the 't' router.
+</dd>
+</dl>
+
+
+
+<a name="unwatch"><h4>8.158. (unwatch &lt;watch-item&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+One of the atoms all, rules, compilations, activations, facts
+</dd>
+<dt>Returns:</dt><dd/>
+
+<dt>Description:</dt><dd>
+Causes trace output to not be printed for the given indicator. See <tt>watch</tt>.
+</dd>
+</dl>
+
+
+<a name="view"><h4>8.160. (view)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+ViewFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+This Userfunction is included in the Jess distribution but is not normally
+installed. You must load it using <a href="functions.html#load-package"><tt>load-package</tt></a>
+(the class name is <tt>jess.ViewFunctions</tt>). When invoked, it
+displays a live snapshot of the Rete network in a graphical window. See
+<a href="rete.html">How Jess Works</a> for details.
+</dd>
+</dl>
+
+
+
+<a name="watch"><h4>8.161. (watch (all | rules | compilations | activations | facts))</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+One of the atoms all, rules, compilations, activations, facts
+activations
+</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Produces additional debug output when specific events happen in Jess, depending
+on the argument. Any number of different watches can be active simultaneously:
+
+<ul>
+<li>
+<tt>rules</tt>: prints a message when any rule fires.</li>
+
+<li>
+<tt>compilations</tt>: prints a message when any rule is compiled.</li>
+
+<li>
+<tt>activations</tt>: prints a message when any rule is activated, or deactivated,
+showing which facts have caused the event.</li>
+
+<li>
+<tt>facts</tt>: print a message whenever a fact is asserted or retracted.</li>
+
+<li>
+<tt>all</tt>: all of the above.
+</li>
+</ul>
+</dd>
+</dl>
+
+
+
+<HR width=100%>
+
+</body>
+</html>
+

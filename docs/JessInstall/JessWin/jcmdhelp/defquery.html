@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>Jess Defquery Functions</title>
+</head>
+<body>
+
+<h2>Jess Defquery Functions</h2>
+
+List of Defquery functions that can be executed by Jess.
+
+<P>
+<HR width=100%>
+
+
+
+<a name="count-query-results"><h4>8.34. (count-query-results &lt;query-name&gt; &lt;expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+An atom, and zero or more additional expressions</dd>
+
+<dt>Returns:</dt><dd>
+INTEGER</dd>
+
+<dt>Description:</dt><dd>
+Runs a <a href="language.html#queries">defquery</a> and returns a
+count of the matches. See the documentation
+for <a href="language.html#queries">defquery</a> for more
+details. Also see <a href="#run-query">run-query</a> for caveats
+concerning calling count-query-results on a rule RHS.
+</dd>
+</dl>
+
+
+
+<a name="run-query"><h4>8.122. (run-query &lt;query-name&gt; &lt;expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+An atom, and zero or more additional expressions</dd>
+
+<dt>Returns:</dt><dd>
+java.util.Iterator, as an EXTERNAL_ADDRESS</dd>
+
+<dt>Description:</dt><dd>
+Runs a <a href="language.html#queries">defquery</a> and returns a
+<tt>java.util.Iterator</tt> of the matches. See the documentation
+for <a href="language.html#queries">defquery</a> for more
+details. Note that run-query can lead to backwards chaining, which can
+cause rules to fire; thus if run-query is called on a rule RHS, other
+rules' RHSs may run to completion before the instigating rule
+completes. Putting run-query on a rule RHS can also cause the count of
+executed rules returned by <a href="functions.html#"><tt>run</tt></a> to be low.
+</dd>
+</dl>
+
+
+
+
+
+<HR width=100%>
+
+</body>
+</html>
+

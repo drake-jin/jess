@@ -1,0 +1,219 @@
+searchApllet : TFrame
+  Background = lightGray
+  Caption = searchApllet
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Foreground = black
+  FrameId = 100201
+  Height = 592
+  Left = 523
+  Tag = 1111
+  Top = 118
+  Width = 494
+  OnWindowDestroy = Frame_1_WindowDestroy
+
+TextArea1 : TTextArea
+  Background = white
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Foreground = black
+  Height = 265
+  Left = 54
+  Parent = Frame
+  Tag = 11
+  Top = 29
+  Width = 375
+  Items[0]
+
+Label1 : TLabel
+  Align = LEFT
+  Caption = 시작상태
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 16
+  Left = 130
+  Parent = Frame
+  Tag = 1
+  Top = 310
+  Width = 77
+
+Label2 : TLabel
+  Align = LEFT
+  Caption = 목표상태
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 16
+  Left = 306
+  Parent = Frame
+  Tag = 1
+  Top = 310
+  Width = 88
+
+Choice1 : TChoice
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 24
+  Left = 111
+  Parent = Frame
+  Tag = 11
+  Top = 330
+  Width = 100
+  Items[0]
+
+Choice2 : TChoice
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 24
+  Left = 293
+  Parent = Frame
+  Tag = 11
+  Top = 331
+  Width = 100
+  Items[0]
+
+Label3 : TLabel
+  Align = LEFT
+  Caption = 탐색방법
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 16
+  Left = 61
+  Parent = Frame
+  Tag = 1
+  Top = 370
+  Width = 81
+
+RadioButton1 : TRadioButton
+  Background = lightGray
+  Caption = 깊이-우선(Depth-First)
+  Checked = False
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 17
+  Left = 60
+  Parent = Frame
+  Tag = 11
+  Top = 390
+  Width = 223
+
+RadioButton2 : TRadioButton
+  Background = lightGray
+  Caption = 너비-우선(Breadth-First)
+  Checked = False
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 17
+  Left = 59
+  Parent = Frame
+  Tag = 11
+  Top = 414
+  Width = 199
+
+RadioButton3 : TRadioButton
+  Background = lightGray
+  Caption = 반복적 점증 깊이-우선(IDDF)
+  Checked = False
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 17
+  Left = 59
+  Parent = Frame
+  Tag = 11
+  Top = 437
+  Width = 269
+
+RadioButton4 : TRadioButton
+  Background = lightGray
+  Caption = 최선(Best-First)
+  Checked = False
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 17
+  Left = 60
+  Parent = Frame
+  Tag = 11
+  Top = 457
+  Width = 161
+
+RadioButton5 : TRadioButton
+  Background = lightGray
+  Caption = A*
+  Checked = True
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 17
+  Left = 60
+  Parent = Frame
+  Tag = 11
+  Top = 477
+  Width = 121
+
+Button1 : TButton
+  Caption = 시작
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 25
+  Left = 91
+  Parent = Frame
+  Tag = 11
+  Top = 520
+  Width = 75
+  OnAction = Button1_Action
+
+Button2 : TButton
+  Caption = 중지
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 25
+  Left = 222
+  Parent = Frame
+  Tag = 11
+  Top = 520
+  Width = 75
+  OnAction = Button2_Action
+
+Button3 : TButton
+  Caption = 지우기
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 25
+  Left = 351
+  Parent = Frame
+  Tag = 11
+  Top = 519
+  Width = 75
+  OnAction = Button3_Action
+
+Label4 : TLabel
+  Align = LEFT
+  Caption = 탐색 결과
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 16
+  Left = 56
+  Parent = Frame
+  Tag = 1
+  Top = 6
+  Width = 88
+
+MMB : TBBTN
+  Left = 22
+  Top = 221
+  Visible = False
+

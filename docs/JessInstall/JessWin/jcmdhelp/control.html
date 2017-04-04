@@ -1,0 +1,180 @@
+<html>
+<head>
+<title>Jess Control Structures</title>
+</head>
+<body>
+
+<h2>Jess Control Structures</h2>
+
+List of control structures that can be used by Jess.
+
+<P>
+<HR width=100%>
+
+
+
+<a name="apply"><h4>8.15. (apply &lt;expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+LispFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One or more expressions</dd>
+
+<dt>Returns:</dt><dd>
+An expression</dd>
+
+<dt>Description:</dt><dd>
+Returns the result of calling the first argument, as a Jess function,
+on all the remaining arguments. The strength of this method lies in
+the fact that you can call a function whose name, for instance, is in
+a Jess variable.</dd>
+</dl>
+
+
+<a name="call-on-engine"><h4>8.28. (call-on-engine &lt;external-address&gt;  &lt;jess-code&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+an external address (must be a jess.Rete object), and an executable
+snippet of Jess code</dd>
+
+
+<dt>Returns:</dt><dd>
+(Varies)</dd>
+
+<dt>Description:</dt><dd>
+Executes some Jess code in the context of the given Rete object. This
+is a nice way to send messages between multiple Rete engines in one
+process. Note that the current variable context is used to evaluate
+the code, so (for instance) all defglobal values will be from the
+calling engine, not the target. 
+
+</dd>
+</dl>
+
+
+
+<a name="foreach"><h4>8.59. (foreach &lt;variable&gt; &lt;multifield-expression&gt; &lt;action&gt;*)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+A variable, a multifield expression, and zero or more arguments</dd>
+
+<dt>Returns:</dt><dd>
+Varies</dd>
+
+<dt>Description:</dt><dd>
+The named variable is set to each of the values in the multifield in turn;
+for each value, all of the other arguments are evaluated in order. The
+<a href="functions.html#return"><tt>return</tt></a> function can be used to break the iteration.
+
+<p align=""/>Example:
+
+<p align=""/><tt>(foreach ?x (create$ a b c d) (printout t ?x crlf))</tt>
+</dd>
+</dl>
+
+
+
+<a name="if"><h4>8.68. (if &lt;expression&gt; then &lt;action&gt;* [else &lt;action&gt;*])</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+A Boolean variable or function call returning Boolean, the atom then,
+and any number of additional expressions; optionally followed by the atom
+else another list of expression.</dd>
+
+<dt>Returns:</dt><dd>
+(Varies)</dd>
+
+<dt>Description:</dt><dd>
+Allows conditional execution of a group of actions. The boolean expression
+is evaluated. If it does not evaluate to <tt>FALSE</tt>, the first list
+of expressions is evaluated, and the return value is that returned by the
+last expression of that list. If it does evaluate to <tt>FALSE</tt>, and
+the optional second list of expressions is supplied, those expressions
+are evaluated and the value of the last is returned.
+
+<p align=""/>
+Example:
+
+<pre>
+    (if (&gt; ?x 100)
+        then
+          (printout t "X is big" crlf)
+        else
+          (printout t "X is small" crlf))
+</pre>
+</dd>
+</dl>
+
+
+
+<a name="progn"><h4>8.109. (progn &lt;expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+LispFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One or more expressions</dd>
+
+<dt>Returns:</dt><dd>
+The result of evaluating the last expression.</dd>
+
+<dt>Description:</dt><dd>
+A simple control structure that allows you to group multiple function
+calls where syntactically only one is allowed - for instance, on the
+LHS of a rule.</dd>
+</dl>
+
+
+
+<a name="return"><h4>8.118. (return [&lt;expression&gt;])</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+An optional expression</dd>
+
+<dt>Returns:</dt><dd>
+(Varies)</dd>
+
+<dt>Description:</dt><dd>
+Returns the given value from a deffunction. Exits the deffunction immediately.
+</dd>
+</dl>
+
+
+<a name="while"><h4>8.162. (while &lt;expression&gt; [do] &lt;action&gt;*)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+A Boolean value or a function call returning Boolean, the atom do, and
+zero or more expressions</dd>
+
+<dt>Returns:</dt><dd>
+(Varies)
+</dd>
+
+<dt>Description:</dt><dd>
+Allows conditional looping. Evaluates the boolean expression repeatedly.
+As long as it does not equal <tt>FALSE</tt>, the list of other expressions
+are evaluated. The value of the last expression evaluated is the return
+value.</dd>
+</dl>
+
+<HR width=100%>
+
+</body>
+</html>
+

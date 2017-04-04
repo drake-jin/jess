@@ -1,0 +1,528 @@
+<html>
+<head>
+<title>Jess Rules Engine Commands</title>
+</head>
+<body>
+
+<h2>Jess Rules Engine Commands</h2>
+
+List of engine commands that can be executed by Jess.
+
+<P>
+<HR width=100%>
+
+
+
+<a name="agenda"><h4>8.13. (agenda)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+NIL</dd>
+
+<dt>Description:</dt><dd>
+Displays a list of rule activations to the WSTDOUT router.</dd>
+</dl>
+
+
+
+
+
+<a name="batch"><h4>8.19. (batch &lt;filename&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Miscfunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One string or atom representing the name of a file</dd>
+
+<dt>Returns:</dt><dd>
+(Varies)</dd>
+
+<dt>Description:</dt><dd>
+Attempts to parse and evaluate the given file as Jess code. If successful,
+returns the return value of the last expression in the file.
+ <p align=""/>
+<b><i>Note:</i></b> the argument must follow Jess' rules for valid
+atoms or strings. On UNIX systems, this presents no particular
+problems, but Win32 filenames may need special treatment. In
+particular: pathnames should use either '\\' (double backslash) or '/'
+(forward slash) instead of '\' (single backslash) as directory
+separators; and pathnames which include a colon (':') or a
+space character (' ') <i>must</i> be enclosed in double quotes.
+<p align=""/>
+In an applet, batch will try to find the file relative to the applet's
+document base. In any program, if the file is not found, the name is
+then passed to <tt>ClassLoader.getSystemResourceAsStream()</tt>. This
+allows files along the class path, including files in JARs, to be batched.
+</dd>
+</dl>
+
+
+
+
+<a name="bload"><h4>8.24. (bload &lt;filename&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+DumpFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One string or atom representing the name of a file</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+The argument is the name of a file previously produced by the <a href="#bsave">bsave</a> command. The file is decompressed and
+deserialized to restore the state of the current Rete object. I/O
+routers are not restored from the file; they retain their
+previous state. Furthermore, JessListeners are not restored from the
+file; again, they are retained from their state prior to the bload.
+</dd>
+</dl>
+
+
+
+<a name="bsave"><h4>8.25. (bsave &lt;filename&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+DumpFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One string or atom representing the name of a file</dd>
+
+<dt>Returns:</dt><dd>
+TRUE
+</dd>
+
+<dt>Description:</dt><dd>
+Dumps the engine in which it is called to the given filename argument
+in a format that can be read using <a href="functions.html#bload"><tt>bload</tt></a>. Any input/output streams and event
+listeners are not saved during the serialization process.
+</dd>
+</dl>
+
+
+<a name="build"><h4>8.26. (build &lt;string-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Miscfunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One string representing some Jess code</dd>
+
+<dt>Returns:</dt><dd>
+(Varies)</dd>
+
+<dt>Description:</dt><dd>
+Evaluates a string as though it were entered at the command prompt. Only
+allows constructs to be evaluated. Attempts to parse and evaluate the given
+string as Jess code. If successful, returns the return value of the last
+expression in the string. This is typically used to define rules from Jess
+code. For instance:
+
+
+<p align=""/><tt>(build "(defrule foo (foo) =&gt; (bar))")</tt>
+
+<p align=""/> Note: The string must consist of one single construct; multiple
+constructs can be built using multiple calls to build.
+</dd>
+</dl>
+
+
+
+
+<a name="clear"><h4>8.29. (clear)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Clears Jess. Deletes all rules, deffacts, defglobals, deftemplates, facts,
+activations, and so forth. Java Userfunctions are not deleted.</dd>
+</dl>
+
+
+<a name="defadvice"><h4>8.36. (defadvice (before | after) (&lt;function-name&gt; | &lt;multifield&gt; )            &lt;function-call&gt;+)</h4></a><dl>
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+The atom before or the atom after, followed by either one
+function name or a multifield of function names or the atom
+ALL, followed by one or more function calls.</dd>
+
+<dt>Returns:</dt><dd>
+(varies)</dd>
+
+
+<dt>Description:</dt><dd>
+Lets you supply extra code to run before or after the named
+function(s) or all functions. If <tt>before</tt> is specified, the
+code will execute before the named function(s); the variable $?argv
+will hold the arguments to the function on entry to and exit from the
+code block. If <tt>after</tt> is specified, the function will be
+called before the code block is entered. When the block is entered,
+the variable ?retval will refer to the original function's return
+value. 
+<p align=""/> 
+Whether <tt>before</tt> or <tt>after</tt> is specified, if the code
+block explicitly calls <a href="functions.html#return"><tt>return</tt></a> with a value, the returned
+value will appear to the caller to be the return value of the original
+function. For <tt>before</tt> advice, this means the original function
+will not be called in this case.
+</dd>
+</dl>
+
+
+
+<a name="do-backward-chaining"><h4>8.41. (do-backward-chaining &lt;deftemplate-tag&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Name of a deftemplate (ordered or unordered)</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Marks a deftemplate as being eligible for backwards chaining, as
+described in the text.
+</dd>
+</dl>
+
+
+
+<a name="engine"><h4>8.43. (engine)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+External address</dd>
+
+<dt>Description:</dt><dd>
+Returns an external-address object containing the Rete engine in which
+the function in called. 
+</dd>
+</dl>
+
+
+<a name="eval"><h4>8.46. (eval &lt;lexeme-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+One string containing a valid Jess expression</dd>
+
+<dt>Returns:</dt><dd>
+(Varies)</dd>
+
+<dt>Description:</dt><dd>
+Evaluates a string as though it were entered at a command prompt. Only
+allows functions to be evaluated. Evaluates the string as if entered at
+the command line and returns the result. 
+<p align=""/>
+<p align=""/> Note: The string must consist of one single function call; multiple
+calls can be evaluated using multiple calls to eval.
+</dd>
+</dl>
+
+
+
+<a name="exit"><h4>8.48. (exit)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+Nothing</dd>
+
+<dt>Description:</dt><dd>
+Exits Jess and halts Java. 
+</dd>
+</dl>
+
+
+
+<a name="get-reset-globals"><h4>8.65. (get-reset-globals)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Indicates the current setting of global variable reset behavior. See <a href="#set-reset-globals">set-reset-globals</a>
+for an explanation of this property.</dd>
+</dl>
+
+
+<a name="get-salience-evaluation"><h4>8.66. get-salience-evaluation</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+Atom</dd>
+
+<dt>Description:</dt><dd>
+Indicates the current setting of salience evaluation behavior. See <a href="#set-salience-evaluation">set-salience-evaluation</a>
+for an explanation of this property.</dd>
+</dl>
+
+
+
+<a name="halt"><h4>8.67. (halt)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Halts rule execution. No effect unless called from the RHS of a rule.
+</dd>
+</dl>
+
+
+
+<a name="reset"><h4>8.114. (reset)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Removes all facts from the fact list, removes all activations, then asserts
+the fact <tt>(initial-fact)</tt>, then asserts all facts found in
+deffacts, asserts a fact representing each registered definstance, and
+(if the set-reset-globals property is TRUE) initializes all
+defglobals.</dd>
+</dl>
+
+
+
+
+<a name="run"><h4>8.121. (run [&lt;integer&gt;])</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Optionally, a single integer</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Starts the inference engine. If no argument is supplied, Jess will
+keep running until no more activations remain or <a href="functions.html#halt"><tt>halt</tt></a> is
+called. If an argument is supplied, it gives the maximum number of
+rules to fire before stopping.
+</dd>
+</dl>
+
+
+
+<a name="run-until-halt"><h4>8.123. (run-until-halt)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Scriptlib</dd>
+
+<dt>Arguments:</dt><dd>
+None.</dd>
+
+<dt>Returns:</dt><dd>
+int</dd>
+
+<dt>Description:</dt><dd>
+Runs the engine until <a href="functions.html#halt"><tt>halt</tt></a> is called. Returns
+the number of rules fired. When there are no active rules, the calling
+thread will be blocked waiting on the activation semaphore.
+</dd>
+</dl>
+
+
+
+
+<a name="set-node-index-hash"><h4>8.129. (set-node-index-hash &lt;integer&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One integral value</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Sets the default hashing key used in all Rete network join node
+memories defined after the function is called; this function will not
+affect parts of the network already in existence at the time of the
+call. A small value will give rise to memory-efficient nodes; a
+larger value will use more memory. If the created  nodes will
+generally have to remember many partial matches, large numbers will
+lead to faster performance; the opposite may be true for nodes which
+will rarely hold more than one or two partial matches. This function
+sets the default; explicit <tt>declare</tt> statements can override
+this for specific rules.
+</dd>
+</dl>
+
+
+
+<a name="set-reset-globals"><h4>8.130. (set-reset-globals (TRUE | FALSE | nil))</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One boolean value (TRUE or FALSE or nil)</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Changes the current setting of the global variable reset behavior. If this
+property is set to TRUE (the default), then the (reset) command reinitializes
+the values of global variables to their initial values (if the initial
+value was a function call, the function call is reexecuted.) If the property
+is set to FALSE or nil, then (reset) will not affect global
+variables. Note that in previous versions of Jess, defglobals were
+always reset; but if the initial value was set with a function call,
+the function was <b>not</b> reevaluated. Now it is.</dd>
+</dl>
+
+
+<a name="set-salience-evaluation"><h4>8.131. (set-salience-evaluation (when-defined | when-activated | every-cycle))</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One of the atoms when-defined, when-activated, or every-cycle</dd>
+
+<dt>Returns:</dt><dd>
+One of the potential arguments (the previous value of this property)</dd>
+
+<dt>Description:</dt><dd>
+Changes the current setting of the salience evaluation behavior. By default,
+a rule's salience will be determined once, when the rule is defined (when-defined.)
+If this property is set to when-activated, then the salience of each rule
+will be redetermined immediately before each time it is placed on the agenda.
+If the property is set to every-cycle, then the salience of every rule
+is redetermined immediately after each time any rule fires.</dd>
+</dl>
+
+
+
+<a name="set-strategy"><h4>8.132. (set-strategy (depth | breadth))</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+An atom or string representing the name of a strategy (can be a fully-qualifed
+Java class name). You can use depth and breadth to represent the two
+built-in strategies.</dd>
+
+<dt>Returns:</dt><dd>
+The previous strategy as an atom.</dd>
+
+<dt>Description:</dt><dd>
+Lets you specify the <i>conflict resolution strategy</i> Jess uses to order
+the firing of rules of equal salience. Currently, there are two strategies
+available: <i>depth</i> <i>(LIFO)</i> and <i>breadth (FIFO).</i> When the
+depth strategy is in effect (the default), more recently activated rules
+are fired before less recently activated rules of the same salience. When
+the breadth strategy is active, rules of the same salience fire in the
+order in which they are activated. Note that in either case, if several
+rules are activated simultaneously (i.e., by the same fact-assertion event)
+the order in which these several rules fire is unspecified, implementation-dependent
+and subject to change. More built-in strategies may be added in the future.
+You can (perhaps) implement your own strategies in Java by creating a class
+that implements the <tt>jess.Strategy</tt> interface and then specifying
+its fully-qualified classname as the argument to <a href="functions.html#set-strategy"><tt>set-strategy</tt></a>.
+Details can be gleaned from the source. At this time, though, I think
+some of the methods you'd need to call are package-protected.
+</dd>
+</dl>
+
+
+<a name="undefadvice"><h4>8.154. (undefadvice (&lt;function-name&gt; | ALL | &lt;multifield&gt;))</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+A function name, or ALL, or a multifield of function names</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Removes all advice from the named function(s).
+</dd>
+</dl>
+
+
+
+<a name="undefrule"><h4>8.156. (undefrule &lt;rule-name&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+An atom representing the name of a rule</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Deletes a defrule. Removes the named rule from the Rete network and returns
+<tt>TRUE</tt> if the rule existed. This rule will never fire again.
+</dd>
+</dl>
+
+<HR width=100%>
+
+</body>
+</html>
+

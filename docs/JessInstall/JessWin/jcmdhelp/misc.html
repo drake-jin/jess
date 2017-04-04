@@ -1,0 +1,318 @@
+<html>
+<head>
+<title>Jess Miscellaneous Functions</title>
+</head>
+<body>
+
+<h2>Jess Miscellaneous Functions</h2>
+
+List of miscellaneous functions that can be executed by Jess.
+
+<P>
+<HR width=100%>
+
+<a name="bag"><h4>8.18. (bag &lt;bag-command&gt; &lt;bag-arguments&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+BagFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+An atom (a sub-command) and one or more additional arguments</dd>
+
+<dt>Returns:</dt><dd>
+(Varies)</dd>
+
+<dt>Description:</dt><dd>
+The <a href="functions.html#bag"><tt>bag</tt></a> command lets you manipulate Java hashtables from Jess.
+The net result is that you can create any number of associative arrays
+or property lists. Each such array or list has a name by which it can be
+looked up. The lists can contain other lists as properties, or any other
+Jess data type. 
+
+<p align=""/>The <a href="functions.html#bag"><tt>bag</tt></a> command does different things based on its first argument.
+It's really seven commands in one:
+
+<ul>
+<li>
+<tt>create</tt> accepts a String, the name of a new Bag to be created.
+The bag object itself is returned. For example:
+
+<pre>
+<b>Jess&gt; </b>(bag create my-bag)
+</pre></li>
+
+<li>
+<tt>delete</tt> accepts the name of an existing bag, and deletes it from
+the list of bags.</li>
+
+<li>
+<tt>find</tt> accepts the name of a bag, and returns the corresponding
+bag object, if one exists, or <tt>nil.</tt></li>
+
+<li>
+<tt>list</tt> returns a list of the names of all the existing bags, as
+a multifield.</li>
+
+<li>
+<tt>set</tt> accepts as arguments a bag, a String property name, and any
+Jess value as its three arguments. The named property of the given bag
+is set to the value, and the value is returned.</li>
+
+<li>
+<tt>get</tt> accepts as arguments a bag and a String property name. The
+named property is retrieved and returned, or <tt>nil</tt> if there is no
+such property. For example:
+
+<pre>
+<b>Jess&gt; </b>(defglobal ?*bag* = 0)
+<i>TRUE</i>
+<b>Jess&gt; </b>(bind ?*bag* (bag create my-bag))
+<i>&lt;External-Address:java.util.Hashtable&gt;</i>
+<b>Jess&gt; </b>(bag set ?*bag* my-prop 3.0)
+<i>3.0</i>
+<b>Jess&gt; </b>(bag get ?*bag* my-prop)
+<i>3.0</i>
+</pre></li>
+
+<li>
+<tt>props</tt> accepts a bag as the single argument and returns a multifield
+consisting of a list of the names of all the properties of that bag.</li>
+</ul>
+</dd>
+</dl>
+
+
+<a name="bind"><h4>8.20. (bind &lt;variable&gt; &lt;expression&gt;*)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+A variable name and any value</dd>
+
+<dt>Returns:</dt><dd>
+(Varies)</dd>
+
+<dt>Description:</dt><dd>
+Binds a variable to a new value. Assigns the given value to the given variable,
+creating the variable if necessary. Returns the given value.</dd>
+</dl>
+
+
+<a name="clear-storage"><h4>8.30. (clear-storage)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Clears the hashtable used by <a href="#store">(store)</a> and <a href="#fetch">(fetch)</a>.
+</dd>
+</dl>
+
+
+
+<a name="fetch"><h4>8.55. (fetch &lt;string or atom&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+One string or atom</dd>
+
+<dt>Returns:</dt><dd>
+(varies)</dd>
+
+<dt>Description:</dt><dd>
+Retrieves and returns any value previously stored by the
+<a href="functions.html#store"><tt>store</tt></a> function under the given
+name, or <tt>nil</tt> if there is none. Analogous to the
+<tt>fetch()</tt> member function of the <tt>Rete</tt> class. See
+the section on <a href="library.html#xfer">using store and
+fetch</a> for details.   
+</dd>
+</dl>
+
+
+
+
+<a name="gensym*"><h4>8.61. (gensym*)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+Atom</dd>
+
+<dt>Description:</dt><dd>
+Returns a special unique sequenced value. Returns a unique atom which consists
+of the letters <tt>gen</tt> plus an integer. Use <a href="functions.html#setgen"><tt>setgen</tt></a>
+to set the value of the integer to be used by the next gensym call.
+</dd>
+</dl>
+
+
+
+<a name="jess-version-number"><h4>8.75. (jess-version-number)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+Float</dd>
+
+<dt>Description:</dt><dd>
+Returns a version number for Jess; currently 6.0 .
+</dd>
+</dl>
+
+
+
+<a name="jess-version-string"><h4>8.76. (jess-version-string)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+String</dd>
+
+<dt>Description:</dt><dd>
+Returns a human-readable string descriptive of this version of Jess.
+</dd>
+</dl>
+
+
+
+<a name="set-factory"><h4>8.126. (set-factory [factory object] )</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+External address, an object that implements the interface
+jess.factory.Factory</dd> 
+
+<dt>Returns:</dt><dd>
+External address, an object that implements the interface
+jess.factory.Factory; the previous value of this property.
+</dd>
+
+<dt>Description:</dt><dd>
+Set the "thing factory" for the active Rete object. Providing an
+alternate "thing factory" is a very advanced, and currently
+undocumented, way to extend Jess's functionality. 
+</dd>
+</dl>
+
+
+<a name="setgen"><h4>8.133. (setgen &lt;numeric-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+A numeric expression</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Sets the starting number used by <a href="functions.html#gensym*"><tt>gensym*</tt></a>. Note that if this number
+has already been used, <a href="functions.html#gensym*"><tt>gensym*</tt></a> uses the next larger number that
+has not been used. 
+</dd>
+</dl>
+
+
+
+
+<a name="store"><h4>8.139. (store &lt;string or atom&gt; &lt;expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+A string or atom and any other value</dd>
+
+<dt>Returns:</dt><dd>
+(varies)</dd>
+
+<dt>Description:</dt><dd>
+Associates the expression with the name given by the first argument,
+such that later calls to the <a href="functions.html#fetch"><tt>fetch</tt></a> will retrieve
+it. Storing the atom nil will clear any value associated with
+name. Analagous to the <tt>store()</tt> member function of the 
+<tt>jess.Rete</tt> class. See section on
+<a href="library.html#xfer">using store and fetch</a> for more
+details.</dd>  
+</dl>
+
+
+
+<a name="system"><h4>8.150. (system &lt;lexeme-expression&gt;+ [&amp;])</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One or more atoms or strings</dd>
+
+<dt>Returns:</dt><dd>
+a java.lang.Process object, or FALSE</dd>
+
+<dt>Description:</dt><dd>
+Sends a command to the operating system. Each atom or string becomes
+one element of the argument array in a call to the Java
+<tt>java.lang.Runtime.exec(String[] cmdaray)</tt> method; therefore to
+execute the command <tt>edit myfile.txt</tt>, you should call
+<tt>(system edit myfile.txt)</tt>, not (system "edit myfile.txt").
+<p align=""/>
+Normally blocks (i.e., Jess stops until the applet returns), but if
+the last argument is an ampersand (<tt>&amp;</tt>), the program will
+run in the background. The standard output and standard error streams
+of the process are connected to the 't' router, but the input of the
+process is not connected to the terminal.
+<p align=""/>
+Returns the Java Process object. You can call waitFor and then
+exitValue to get the exit status of the process.
+</dd>
+</dl>
+
+
+
+
+<a name="time"><h4>8.152. (time)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Returns the number of seconds since 12:00 AM, Jan 1, 1970.
+</dd>
+</dl>
+
+
+<HR width=100%>
+
+</body>
+</html>

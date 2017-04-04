@@ -1,0 +1,52 @@
+
+
+import java.util.*;
+import java.io.*;
+
+
+class ContinuousVariable extends Variable {
+float min = (float)0.0;
+float max = (float)0.0;
+
+//CV1<-DS6:ContinuousVariable(String name)
+//CV2->V1:super(name)
+ContinuousVariable(String name) { super(name); }
+void setMin(float Min) { min = Min; }   
+void setMax(float Max) { max = Max; }   
+
+//CV3<-V3:computeStatistics(String inValue)
+  public void computeStatistics(String inValue){
+    float val = new Float(inValue).floatValue();
+    if (val < min) min = val ;//0.0
+    if (val > max) max = val ;//0.0->1
+} 
+
+// scale the inValue to 0.0 and 1.0
+
+//CV4<-V5: 매개변수-0.0 ,normNumRec[],0,...
+public int normalize(String inStrValue, float[] outArray, int inx) {
+    float outValue ;
+    float inValue = Float.valueOf(inStrValue).floatValue();
+    if (inValue <= min) { //0보다 적거나 같은 경우 0으로
+        outValue = min ;
+    } else if (inValue >= max) {//1보다 크거나 같은 경우 1로
+        outValue = max ;
+    } else {//0과 1 사이인 경우 정규화
+       float factor = max - min ;
+       outValue = inValue / factor ;
+    }
+    outArray[ inx] = outValue ;//[0.0 0.0 0.0 ...] 12개 data
+    return inx+1 ;
+}
+  
+
+};
+
+
+
+
+
+
+
+
+

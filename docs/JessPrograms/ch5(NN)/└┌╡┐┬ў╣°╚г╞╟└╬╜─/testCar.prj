@@ -1,0 +1,37 @@
+
+[Files]
+List=A:\testCar\testCar.java|A:\testCar\Neural.java|A:\testCar\NNfile.java|A:\testCar\Utilities.java|A:\testCar\testCar.html|
+Active Module=A:\testCar\testCar.java
+
+[Compiler]
+Compile Option=-g
+
+[VM]
+VM Option=
+
+[Directory]
+Compiler ClassPath=.;C:\jdk1.3\jre\lib\rt.jar
+Compiler Name=javac (Sun's JDK)
+VM ClassPath=.;C:\jdk1.3\jre\lib\rt.jar
+Interpreter Name=java
+Working Dir=C:\Program Files\Bluette 1.5
+
+[Arguments]
+Application=
+Applet=
+
+[Misc]
+Save Option=1
+Console=0
+Javah=0
+
+[User Tool]
+Name=
+Path=
+Env=
+Option=
+Arg=
+Ext=
+
+[Watch List]
+Items=

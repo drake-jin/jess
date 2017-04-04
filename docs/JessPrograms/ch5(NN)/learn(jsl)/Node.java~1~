@@ -1,0 +1,60 @@
+
+
+import java.util.*;
+import java.io.*;
+import java.awt.*;
+import java.lang.Math;
+
+// decision tree node
+public class Node {
+
+ String label ;      // name of the node
+ Vector linkLabels;  // tests on links from parent to child
+ Node parent ;       // parent node
+ Vector children ;   // any children nodes
+
+ public Node() { parent = null ;
+                 children = new Vector();
+                 linkLabels = new Vector(); }
+
+ public Node(String Label) {
+                 label = Label ;
+                 children = new Vector() ;
+                 parent = null;
+                 linkLabels = new Vector() ; }
+
+ public Node(Node Parent, String Label) {
+                 parent = Parent ;
+                 children = new Vector() ;
+                 label = Label ;
+                 linkLabels = new Vector() ; }
+ void addChild(Node child, String linkLabel) {
+                 children.addElement(child) ;
+                 linkLabels.addElement(linkLabel) ;}
+ boolean hasChildren() {
+                 if (children.size() == 0) return false;
+                 else return true; }
+ void setLabel(String Label) { label = Label ; }
+
+ static void displayTree(Node root) {
+     if (root.children.size() == 0) {
+        DecisionTree.appendText("\nLeaf node - " + root.label) ;
+        return ;
+     } else {
+       Enumeration enum = root.children.elements() ;
+       Enumeration enum2 = root.linkLabels.elements() ;
+       DecisionTree.appendText("\nInterior node - " + root.label) ;
+       while (enum.hasMoreElements()) {
+         DecisionTree.appendText("\nLink - " + (String)enum2.nextElement()) ;
+         displayTree((Node)enum.nextElement()) ;
+       }
+     }
+ }
+
+
+};
+
+ 
+
+
+

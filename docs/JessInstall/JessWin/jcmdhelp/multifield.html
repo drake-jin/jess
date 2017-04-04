@@ -1,0 +1,299 @@
+<html>
+<head>
+<title>Jess Multifield Functions</title>
+</head>
+<body>
+
+<h2>Jess Multifield Functions</h2>
+
+List of multifield functions that can be executed by Jess.
+
+<P>
+<HR width=100%>
+
+
+
+<a name="complement$"><h4>8.32. (complement$ &lt;multifield-expression&gt; &lt;multifield-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MultiFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+Two multifields</dd>
+
+<dt>Returns:</dt><dd>
+Multifield</dd>
+
+<dt>Description:</dt><dd>
+Returns a new multifield consisting of all elements of the second multifield
+not appearing in the first multifield.</dd>
+</dl>
+
+
+
+
+<a name="create$"><h4>8.35. (create$ &lt;expression&gt;*)</h4></a><dl>
+<dt>Package:</dt><dd>
+MultiFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+Zero or more expressions</dd>
+
+<dt>Returns:</dt><dd>
+Multifield</dd>
+
+<dt>Description:</dt><dd>
+Appends its arguments together to create a multifield value. Returns a
+new multifield containing all the given arguments, in order. For each
+argument that is a multifield, the individual elements of the
+multifield are added to the new multifield; this function will not
+create nested multifields (which are not meaningful in the Jess
+language.) <b><i>Note</i></b>: multifields must be created explicitly
+using this function or others that return them. Multifields cannot be
+directly parsed from Jess input.</dd>
+</dl>
+
+
+
+<a name="delete$"><h4>8.39. (delete$ &lt;multifield-expression&gt; &lt;begin-integer-expression&gt; &lt;end-integer-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MultiFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+A multifield and two integer expressions</dd>
+
+<dt>Returns:</dt><dd>
+Multifield</dd>
+
+<dt>Description:</dt><dd>
+Deletes the specified range from a multifield value. The first numeric
+expression is the 1-based index of the first element to remove; the second
+is the 1-based index of the last element to remove.</dd>
+</dl>
+
+
+
+<a name="explode$"><h4>8.50. (explode$ &lt;string-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MultiFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One string</dd>
+
+<dt>Returns:</dt><dd>
+Multifield</dd>
+
+<dt>Description:</dt><dd>
+Creates a multifield value from a string. Parses the string as if by a
+succession of <a href="functions.html#read"><tt>read</tt></a> calls, then returns these individual values
+as the elements of a multifield.
+</dd>
+</dl>
+
+
+
+<a name="first$"><h4>8.56. (first$ &lt;multifield-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MultiFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One multifield</dd>
+
+<dt>Returns:</dt><dd>
+Multifield</dd>
+
+<dt>Description:</dt><dd>
+Returns the first field of a multifield as a new 1-element multifield.
+</dd>
+</dl>
+
+
+
+<a name="implode$"><h4>8.69. (implode$ &lt;multifield-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MultiFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One multifield</dd>
+
+<dt>Returns:</dt><dd>
+String</dd>
+
+<dt>Description:</dt><dd>
+Creates a string from a multifield value. Converts each element of the
+multifield to a string, and returns these strings concatenated with single
+intervening spaces.
+</dd>
+</dl>
+
+
+<a name="insert$"><h4>8.71. (insert$ &lt;multifield-expression&gt; &lt;integer-expression&gt; &lt;single-or-multifield-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MultiFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+A multifield, an integer, and one or more multifields</dd>
+
+<dt>Returns:</dt><dd>
+A multifield</dd>
+
+<dt>Description:</dt><dd>
+Inserts one or more values in a multifield. Inserts the elements of the
+second and later multifields so that they appear starting at the given 1-based
+index of the first multifield.
+</dd>
+</dl>
+
+
+
+<a name="intersection$"><h4>8.74. (intersection$ &lt;multifield-expression&gt; &lt;multifield-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MultiFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+Two multifields</dd>
+
+<dt>Returns:</dt><dd>
+Multifield</dd>
+
+<dt>Description:</dt><dd>
+Returns the intersection of two multifields. Returns a multifield consisting
+of the elements the two argument multifields have in common.
+</dd>
+</dl>
+
+
+<a name="length$"><h4>8.77. (length$ &lt;multifield-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MultiFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+Multifield</dd>
+
+<dt>Returns:</dt><dd>
+Integer</dd>
+
+<dt>Description:</dt><dd>
+Returns the number of fields in a multifield value.
+</dd>
+</dl>
+
+
+<a name="member$"><h4>8.90. (member$ &lt;single-field-expression&gt; &lt;multifield-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MultiFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+A value and a multifield</dd>
+
+<dt>Returns:</dt><dd>
+Integer or FALSE</dd>
+
+<dt>Description:</dt><dd>
+Returns the position (1-based index) of a single-field value within a multifield
+value; otherwise, returns <tt>FALSE</tt>. 
+</dd>
+</dl>
+
+
+<a name="nth$"><h4>8.98. (nth$ &lt;integer-expression&gt; &lt;multifield-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MultiFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+A number and a multifield</dd>
+
+<dt>Returns:</dt><dd>
+(Varies)</dd>
+
+<dt>Description:</dt><dd>
+Returns the value of the specified (1-based index) field of a multifield
+value. 
+</dd>
+</dl>
+
+
+
+<a name="replace$"><h4>8.113. (replace$ &lt;multifield-expression&gt; &lt;begin-integer-expression&gt; &lt;end-integer-expression&gt; &lt;multifield-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MultiFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+A multifield, two numeric expressions, and one or more additional
+single or multifield values</dd>
+
+<dt>Returns:</dt><dd>
+Multifield</dd>
+
+<dt>Description:</dt><dd>
+Replaces the specified range of a multifield value with a set of values.
+The variable number of final arguments are inserted into the first multifield,
+replacing elements between the 1-based indices given by the two numeric
+arguments, inclusive.
+
+Example:
+
+<pre>
+<b>Jess&gt; </b>(replace$ (create$ a b c) 2 2 (create$ x y z))
+<i>(a x y z c)</i>
+</pre>
+
+</dd>
+</dl>
+
+
+<a name="subseq$"><h4>8.146. (subseq$ &lt;multifield-expression&gt; &lt;begin-integer-expression&gt; &lt;end-integer-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MultiFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+A multifield and two numeric expressions</dd>
+
+<dt>Returns:</dt><dd>
+Multifield</dd>
+
+<dt>Description:</dt><dd>
+Extracts the specified range from a multifield value consisting of the
+elements between the two 1-based indices of the given multifield, inclusive.
+</dd>
+</dl>
+
+
+
+
+<a name="union$"><h4>8.157. (union$ [&lt;multifield-expression&gt;]+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MultiFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One or more multifields</dd>
+
+<dt>Returns:</dt><dd>
+Multifield</dd>
+
+<dt>Description:</dt><dd>
+Returns a new multifield consisting of the union of all of its multifield
+arguments (i.e., of all the elements that appear in any of the arguments with
+duplicates removed).
+</dd>
+</dl>
+
+
+
+<HR width=100%>
+
+</body>
+</html>
+

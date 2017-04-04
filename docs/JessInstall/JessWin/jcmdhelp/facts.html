@@ -1,0 +1,221 @@
+<html>
+<head>
+<title>Jess Fact Functions</title>
+</head>
+<body>
+
+<h2>Jess Fact Functions</h2>
+
+List of functions for working with facts.
+
+<P>
+<HR width=100%>
+
+
+<a name="assert"><h4>8.16. (assert &lt;fact&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+One or more facts (not fact-IDs)</dd>
+
+<dt>Returns:</dt><dd>
+Fact-ID or FALSE</dd>
+
+<dt>Description:</dt><dd>
+Adds a fact to the fact list. Asserts all facts onto the fact list; returns
+the fact-ID of last fact asserted or <tt>FALSE</tt> if no facts were successfully
+asserted (for example, if all facts given are duplicates of existing facts.)</dd>
+</dl>
+
+
+
+<a name="assert-string"><h4>8.17. (assert-string &lt;string-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+One string representing a fact</dd>
+
+<dt>Returns:</dt><dd>
+Fact-ID or FALSE</dd>
+
+<dt>Description:</dt><dd>
+Converts a string into a fact and asserts it. Attempts to parse string
+as a fact, and if successful, returns the value returned by assert with
+the same fact. Note that the string must contain the fact's enclosing parentheses.</dd>
+</dl>
+
+
+
+<a name="fact-id"><h4>8.52. (fact-id &lt;integer&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Miscfunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One number, a fact-id</dd>
+
+<dt>Returns:</dt><dd>
+The given number as an RU.FACT</dd>
+
+<dt>Description:</dt><dd>
+If the argument is the fact-id of an existing fact, returns the
+number as a value of type RU.FACT; otherwise throws an exception.
+</dd>
+</dl>
+
+
+
+<a name="fact-slot-value"><h4>8.53. (fact-slot-value &lt;fact-id&gt; &lt;slot-name&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Scriptlib</dd>
+
+<dt>Arguments:</dt><dd>
+A fact-id and a slot name</dd>
+
+<dt>Returns:</dt><dd>
+(varies)</dd>
+
+<dt>Description:</dt><dd>
+Returns the value in the named slot of the fact with the given fact-id.
+</dd>
+</dl>
+
+
+
+<a name="facts"><h4>8.54. (facts)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Scriptlib</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Prints a list of all facts on the fact list.
+</dd>
+</dl>
+
+
+
+<a name="load-facts"><h4>8.80. (load-facts &lt;file-name&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+A string or atom representing the name of a file of facts</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Asserts facts loaded from a file. The argument should name a file containing
+a list of facts (not deffacts constructs, and no other commands or constructs).
+Jess will parse the file and assert each fact. The return value is the
+return value of assert when asserting the last fact. In an applet, <a href="functions.html#load-facts"><tt>load-facts</tt></a>
+will use <tt>getDocumentBase()</tt> to find the named file.
+ <p align=""/>
+<b><i>Note:</i></b> See the <a href="functions.html#batch"><tt>batch</tt></a> command for a
+discussion about specifying filenames in Jess.
+</dd>
+</dl>
+
+
+
+<a name="modify"><h4>8.93. (modify &lt;fact-specified&gt; &lt;RHS-slot&gt;*)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+A fact-ID and zero or more two-element lists</dd>
+
+<dt>Returns:</dt><dd>
+Fact-ID</dd>
+
+<dt>Description:</dt><dd>
+Modifies the deftemplate fact in the fact list. The fact-ID must belong
+to an unordered fact. Each list is taken as the name of a slot in this
+fact and a new value to assign to the slot. A new fact is asserted which
+is similar to the given fact but which has the specified slots replaced
+with new values. The original fact is retracted. The fact-ID of the new
+fact is returned. Modifying a <a href="functions.html#definstance"><tt>definstance</tt></a> fact will cause the
+appropriate object properties to be set as well.</dd>
+</dl>
+
+
+
+<a name="retract"><h4>8.116. (retract &lt;integer-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+One or more fact-IDs (<i>not</i> integers)</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Retracts the facts whose IDs are given. Retracting a definstance fact will
+result in an implict call to undefinstance for the corresponding object
+(the object will no longer be pattern-matched).
+</dd>
+</dl>
+
+
+
+<a name="retract-string"><h4>8.117. (retract-string &lt;string&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+A string, a representation of a Fact</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Parses the string as a Fact; if such a fact exists on the knowledge
+base, calls <a href="functions.html#retract"><tt>retract</tt></a> on it.
+</dd>
+</dl>
+
+
+
+<a name="save-facts"><h4>8.124. (save-facts &lt;file-name&gt; [&lt;deftemplate-name&gt;])</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+A filename, and optionally an atom</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Saves facts to a file. Attempts to open the named file for writing, and
+then writes a list of all facts on the fact list to the file. This file
+is suitable for reading with load-facts. If the optional second argument
+is given, only facts whose head matches this atom will be saved. Does not
+work in applets.
+ <p align=""/>
+<b><i>Note:</i></b> See the <a href="functions.html#batch"><tt>batch</tt></a> command for a
+discussion about specifying filenames in Jess.
+</dd>
+</dl>
+
+
+<HR width=100%>
+</body>
+</html>

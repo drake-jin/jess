@@ -1,0 +1,1 @@
+java -classpath bin/jess.jar jess.Main $1

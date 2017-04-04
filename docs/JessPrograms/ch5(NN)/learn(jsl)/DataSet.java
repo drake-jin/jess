@@ -1,0 +1,255 @@
+
+import java.util.*;
+import java.io.*;
+import java.awt.*;
+
+
+// A DataSet is read from a text file
+// The variables must be defined and added in the correct order
+// The string data is available in the data member
+// The normalized numeric data is available in the normalizedData member
+public class DataSet extends Object {
+ String name ;
+ String fileName ;
+ boolean allNumericData ;  // if true use float[] else String[]
+ 
+ Vector data ;             // raw data from file
+ Vector normalizedData ;   // scaled and translated data 
+ Hashtable variableList ;  // variable definitions
+ Vector fieldList ;        // field definitions where index = column
+  
+ int fieldsPerRec=0;
+ int normFieldsPerRec=0;
+ int numRecords=0 ; 
+ static TextArea textArea1 ;
+
+ static public void trace(String text) { textArea1.appendText(text);}
+//DS1<-LA1
+ static public void setDisplay(TextArea tx1) { textArea1 = tx1; } 
+//DS2<-LA2
+ DataSet(String Name, String FileName) {
+    name = Name;              // object name
+    fileName = FileName ;     // text file name
+    fieldsPerRec = 0 ;        // start with no variables defined
+    allNumericData = true ;   // assume all numeric data  
+    data = new Vector() ;            // holds string data
+    variableList = new Hashtable();  // for named lookup
+    fieldList = new Vector();        // for ordered lookup
+ }
+
+// for trace purposes - display all variables and their value
+//DS18<-DS17: Hashtable이므로 순서 무관
+ public void displayVariables() {
+
+   Enumeration enum = variableList.elements() ;
+   while(enum.hasMoreElements()) {
+     String values ; 
+     Variable temp = (Variable)enum.nextElement() ;
+     if(temp.labels != null) {
+        values = temp.getLabels();
+     } else {
+        values =  "< real>" ; 
+     }
+     trace("\n" + temp.name + "( " + values + ") ") ;
+   }
+ }
+
+//DS5<-DS4
+ public void loadDataFileDefinition() {
+  String tempRec[]=null ;   // used when data is symbolic
+  String line=null ;
+  trace("\nReading file definition " + fileName + ".dfn with " +
+         fieldsPerRec + " fields per record\n ") ;
+  DataInputStream in=null ;
+  try {
+    in = new DataInputStream(new FileInputStream(fileName + ".dfn"));
+  }
+  catch (FileNotFoundException exc) {
+    trace("Error: Can't find file " + fileName + ".dfn" ) ;
+  }
+
+  int recInx = 0 ;
+  int token= 0 ;
+  StringTokenizer input = null ;
+  do {
+       try {
+         line = in.readLine();// continuous input1, ...
+         if (line != null) {
+            input = new StringTokenizer(line) ;
+         } else {
+            break ;
+         }
+       } catch (IOException exc){
+            trace("Error reading file: " + fileName + ".dfn") ;
+      }
+       
+      trace("\n Record " + recInx + ": ");
+      String varType = input.nextToken() ;//continuous, ...
+      String varName = input.nextToken() ;//input1, ...
+      if (varType.equals("continuous")) {
+
+//DS6->CV1:new ContinuousVariable(varName)
+//DS7->DS8:addVariable()
+        addVariable(new ContinuousVariable(varName)) ; 
+      } else if (varType.equals("discrete")) {
+         addVariable(new DiscreteVariable(varName)) ; 
+      } else if (varType.equals("categorical")) {
+         addVariable(new DiscreteVariable(varName)) ; 
+      }    
+      trace(varType + " " + varName);     
+      recInx++ ;//0->1
+  } while (token != StreamTokenizer.TT_EOF) ;
+
+    fieldsPerRec = fieldList.size() ;
+    trace("\nCreated " + fieldsPerRec + " variables.\n") ; 
+  
+ }
+ 
+//DS21<-LA7
+ public int getClassFieldSize() {
+    if (variableList.get("ClassField") == null) {
+        trace("DataSet " + name + "does not have a ClassField") ;
+        return 0 ;
+    }
+    else return ((Variable)variableList.get("ClassField")).normalizedSize();//V4:1
+ }
+
+//DS3<-LA3
+ public void loadDataFile() {
+  
+  String tempRec[]=null ;   // used when data is symbolic
+  
+//DS4->DS5:loadDataFileDefinition()
+  loadDataFileDefinition() ;  // first read the file def and create the vars
+  fieldsPerRec = fieldList.size(); //3
+  
+  String line=null ;
+  trace("\nReading file " + fileName + ".dat with " +
+         fieldsPerRec + " fields per record\n ") ;
+  DataInputStream in=null ;
+  try {
+    in = new DataInputStream(new FileInputStream(fileName + ".dat"));
+  }
+  catch (FileNotFoundException exc) {
+    trace("Error: Can't find file " + fileName + ".dat" ) ;
+  }
+
+  int recInx = 0 ;
+  int token= 0 ;
+  StringTokenizer input = null ;
+  do {
+       try {
+         line = in.readLine();
+         if (line != null) {
+            input = new StringTokenizer(line) ;
+            tempRec = new String[fieldsPerRec] ;
+            data.addElement(tempRec) ; // [0.0 0.0 0.0] [1.0 0.0 1.0]...12개 data    
+         } else {
+            break ;
+         }
+       } catch (IOException exc){
+            trace("Error reading file: " + fileName + ".dat") ;
+       }
+       
+      trace("\n Record " + recInx + ": ");
+      for(int i= 0 ; i < fieldsPerRec ; i++) {    
+         tempRec[i] = input.nextToken() ;//0.0->0.0->0.0,
+//DS10->CV3
+         ((Variable)fieldList.elementAt(i)).computeStatistics(tempRec[i]); 
+         trace(tempRec[i] + " ");     
+      }
+      recInx++ ;
+    } while (token != StreamTokenizer.TT_EOF) ;
+    numRecords = recInx ; 
+    trace("\nLoaded " + numRecords + " records into memory.\n") ; 
+//DS11->DS12
+    normalizeData() ; // now convert to numeric form 
+//DS17->DS18
+    displayVariables() ; 
+//DS19->DS20
+    displayNormalizedData(); 
+ }
+
+//DS8<-DS7
+ public void addVariable(Variable var) {
+   variableList.put(var.name, var) ;       
+   fieldList.addElement(var) ;
+//DS9->V2
+   var.setColumn(fieldsPerRec);
+   fieldsPerRec++ ; //0->1->2
+ }
+
+//DS14<-DS13
+  public int getNormalizedRecordSize() {
+    
+   int sum = 0 ; 
+   Enumeration vars = variableList.elements() ;  
+   while (vars.hasMoreElements()) {
+          Variable thisVar = (Variable)vars.nextElement() ; //input1->input2->ClassField
+
+//DS15->V4:thisVar.normalizedSize()
+          sum += thisVar.normalizedSize() ; //++1  (3)  
+   }    
+   return sum ; 
+  }
+
+ public String getClassFieldValue(int recIndex) {
+    Variable classField = (Variable)variableList.get("ClassField") ; 
+    return ((String[])data.elementAt(recIndex))[classField.column] ;   
+ }
+ public String getClassFieldValue(float[] activations, int index) {
+    String value ; 
+    Variable classField = (Variable)variableList.get("ClassField") ; 
+    if (classField.categorical()) {
+        value = classField.getDecodedValue(activations, index) ; 
+    } else {
+        value = String.valueOf(activations[index]) ; 
+    }
+    return value ;   
+ }
+ 
+ // walk through the file data and scale/translate it
+ // to all numeric data ranging between 0 and 1 
+ 
+//DS12<-DS11 
+ public void normalizeData() {
+    String tempRec[]= null ;
+    normalizedData = new Vector() ; 
+    
+//DS13->DS14:getNormalizedRecordSize()
+    normFieldsPerRec = getNormalizedRecordSize(); //3
+    Enumeration rawData = data.elements() ;
+    while(rawData.hasMoreElements()) {
+       int inx = 0 ;   
+       float normNumRec[] = new float[normFieldsPerRec] ; 
+       Enumeration fields = fieldList.elements() ; // input1 var, input2 var, ClassField var
+       tempRec = (String[])rawData.nextElement() ; //[0.0 0.0 0.0] ... 
+       for (int i=0 ; i < fieldsPerRec ; i++) {
+          Variable thisVar = (Variable)fields.nextElement() ;  
+//DS16->V5:normalize(tempRec[i], normNumRec, inx)
+          inx = thisVar.normalize(tempRec[i], normNumRec, inx) ; 
+           
+       }        
+       normalizedData.addElement(normNumRec) ; //{[0.0 0.0 0.0], ...} CBR???
+    }    
+ }
+
+//DS20<-DS19: Recodrd 0: 0.0 0.0 0.0 ...
+ public void displayNormalizedData() {
+  
+    float tempNumRec[] ; 
+    
+    Enumeration rawData = normalizedData.elements() ;
+    while(rawData.hasMoreElements()) {
+       int recInx = 0 ;      
+       trace("\n Record " + recInx + ": ");
+       tempNumRec = (float[])rawData.nextElement() ;        
+       int numFields = tempNumRec.length ; 
+       for (int i=0 ; i < numFields ; i++) {
+          trace(String.valueOf(tempNumRec[i]) + " ") ;
+       }        
+       recInx++ ; 
+    }     
+ }
+
+}

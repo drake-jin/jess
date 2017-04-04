@@ -1,0 +1,168 @@
+<html>
+<head>
+<title>Jess String Functions</title>
+</head>
+<body>
+
+<h2>Jess String Functions</h2>
+
+List of string functions that can be executed by Jess.
+
+<P>
+<HR width=100%>
+
+
+
+
+<a name="lowcase"><h4>8.87. (lowcase &lt;lexeme-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+StringFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One atom or string.</dd>
+
+<dt>Returns:</dt><dd>
+String</dd>
+
+<dt>Description:</dt><dd>
+Converts uppercase characters in a string or symbol to lowercase. Returns
+the argument as an all-lowercase string.
+</dd>
+</dl>
+
+
+
+<a name="str-cat"><h4>8.140. (str-cat &lt;expression&gt;*)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+StringFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+Zero or more expressions</dd>
+
+<dt>Returns:</dt><dd>
+String</dd>
+
+<dt>Description:</dt><dd>
+Concatenates its arguments as strings to form a single string.</dd>
+</dl>
+
+
+
+<a name="str-compare"><h4>8.141. (str-compare &lt;string-expression&gt; &lt;string-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+StringFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+Two strings</dd>
+
+<dt>Returns:</dt><dd>
+Integer</dd>
+
+<dt>Description:</dt><dd>
+Lexicographically compares two strings. Returns 0 if the strings are identical,
+a negative integer if the first is lexicographically less than the second,
+a positive integer if lexicographically greater.
+</dd>
+</dl>
+
+
+
+<a name="str-index"><h4>8.142. (str-index &lt;lexeme-expression&gt; &lt;lexeme-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+StringFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+Two atoms</dd>
+
+<dt>Returns:</dt><dd>
+Integer or FALSE</dd>
+
+<dt>Description:</dt><dd>
+Returns the position of the first argument within the second argument.
+This is the 1-based index at which the first string first appears in the
+second; otherwise, returns <tt>FALSE</tt>. 
+</dd>
+</dl>
+
+
+
+<a name="str-length"><h4>8.143. (str-length &lt;lexeme-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+StringFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+An atom</dd>
+
+<dt>Returns:</dt><dd>
+Integer</dd>
+
+<dt>Description:</dt><dd>
+Returns the length of an atom in characters.
+</dd>
+</dl>
+
+
+
+<a name="sub-string"><h4>8.145. (sub-string &lt;begin-integer-expression&gt; &lt;end-integer-expression&gt; &lt;string-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+StringFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+Two numbers and a string</dd>
+
+<dt>Returns:</dt><dd>
+String</dd>
+
+<dt>Description:</dt><dd>
+Retrieves a subportion from a string. Returns the string consisting of
+the characters between the two 1-based indices of the given string, inclusive.
+</dd>
+</dl>
+
+
+<a name="sym-cat"><h4>8.148. (sym-cat &lt;expression&gt;*)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Zero or more expressions</dd>
+
+<dt>Returns:</dt><dd>
+Atom</dd>
+
+<dt>Description:</dt><dd>
+Concatenates its arguments as strings to form a single symbol.</dd>
+</dl>
+
+
+
+<a name="upcase"><h4>8.159. (upcase &lt;lexeme-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+StringFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+A string or atom</dd>
+
+<dt>Returns:</dt><dd>
+A string</dd>
+
+<dt>Description:</dt><dd>
+Converts lowercase characters in a string or symbol to uppercase. Returns
+the argument as an all-uppercase string. 
+</dd>
+</dl>
+
+
+<HR width=100%>
+
+</body>
+</html>
+

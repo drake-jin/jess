@@ -1,0 +1,6 @@
+deffact
+deffunction
+defglobal
+defquery
+defrule
+deftemplate

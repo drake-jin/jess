@@ -1,0 +1,61 @@
+Hello : TFrame
+  Background = lightGray
+  Caption = Hello
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Foreground = black
+  FrameId = 100201
+  Height = 300
+  Left = 594
+  Tag = 1111
+  Top = 208
+  Width = 400
+  OnWindowDestroy = Frame_2_WindowDestroy
+
+TextField1 : TTextField
+  Background = white
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Foreground = black
+  Height = 24
+  Left = 152
+  Parent = Hello
+  PasswdChar = 0
+  Tag = 11
+  Text =  
+  Top = 48
+  Width = 121
+
+Display : TButton
+  Caption = Display
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 25
+  Left = 105
+  Parent = Hello
+  Tag = 11
+  Top = 159
+  Width = 75
+  OnAction = Display_Action
+
+Clear : TButton
+  Caption = Clear
+  FontName = Dialog
+  FontSize = 12
+  FontStyle = [BOLD]
+  Height = 25
+  Left = 241
+  Parent = Hello
+  Tag = 11
+  Top = 160
+  Width = 75
+  OnAction = Clear_Action
+
+MMB : TBBTN
+  Left = 22
+  Top = 221
+  Visible = False
+

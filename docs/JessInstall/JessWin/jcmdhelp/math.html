@@ -1,0 +1,606 @@
+<html>
+<head>
+<title>Jess Math Functions</title>
+</head>
+<body>
+
+<h2>Jess Math Functions</h2>
+
+List of math functions that can be executed by Jess.
+
+<P>
+<HR width=100%>
+
+
+<a name="*"><h4>8.1. (* &lt;numeric-expression&gt; &lt;numeric-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Two or more numeric expressions</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Returns the products of its arguments. The return value is an <tt>INTEGER</tt>
+unless any of the arguments are <tt>FLOAT</tt>, in which case it is a <tt>FLOAT</tt>.
+</dd>
+
+</dl>
+
+
+<a name="**"><h4>8.2. (** &lt;numeric-expression&gt; &lt;numeric-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MathFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+Two numeric expressions</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Raises its first argument to the power of its second argument (using
+Java's <tt>Math.pow()</tt> function). <b><i>Note</i>:</b> the return value is
+<tt>NaN</tt> (not a number) if both arguments are negative.
+</dd>
+</dl>
+
+
+<a name="+"><h4>8.3. (+ &lt;numeric-expression&gt; &lt;numeric-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Two or more numeric expressions</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Returns the sum of its arguments. The return value is an <tt>INTEGER</tt>
+unless any of the arguments are <tt>FLOAT</tt>, in which case it is a <tt>FLOAT</tt>.
+</dd>
+</dl>
+
+
+
+<a name="-"><h4>8.4. (- &lt;numeric-expression&gt; &lt;numeric-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Two or more numeric expressions</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Returns the first argument minus all subsequent arguments. The return value
+is an <tt>INTEGER</tt> unless any of the arguments are <tt>FLOAT</tt>,
+in which case it is a <tt>FLOAT</tt>.
+</dd>
+</dl>
+
+
+
+<a name="/"><h4>8.5. (/ &lt;numeric-expression&gt; &lt;numeric-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Two or more numeric expressions</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Returns the first argument divided by all subsequent arguments. The return
+value is a <tt>FLOAT</tt>.
+</dd>
+</dl>
+
+
+
+
+<a name="&lt;"><h4>8.6. (&lt; &lt;numeric-expression&gt; &lt;numeric-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Two or more numeric expressions</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Returns <tt>TRUE</tt> if each argument is less in value than the argument
+following it; otherwise, returns <tt>FALSE</tt>.
+</dd>
+</dl>
+
+
+
+<a name="&lt;="><h4>8.7. (&lt;= &lt;numeric-expression&gt; &lt;numeric-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Two or more numeric expressions</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Returns <tt>TRUE</tt> if the value of each argument is less than or equal
+to the value of the argument following it; otherwise, returns <tt>FALSE</tt>.
+</dd>
+</dl>
+
+
+
+<a name="&lt;&gt;"><h4>8.8. (&lt;&gt; &lt;numeric-expression&gt; &lt;numeric-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Two or more numeric expressions</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Returns <tt>TRUE</tt> if the value of the first argument is not equal in
+value to all subsequent arguments; otherwise returns <tt>FALSE</tt>. 
+</dd>
+</dl>
+
+
+
+<a name="="><h4>8.9. (= &lt;numeric-expression&gt; &lt;numeric-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Two or more numeric expressions</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Returns <tt>TRUE</tt> if the value of the first argument is equal in value
+to all subsequent arguments; otherwise, returns <tt>FALSE</tt>. The integer
+2 and the float 2.0 are <a href="functions.html#="><tt>=</tt></a>, but not <a href="functions.html#eq"><tt>eq</tt></a>.
+</dd>
+</dl>
+
+
+
+<a name="&gt;"><h4>8.10. (&gt; &lt;numeric-expression&gt; &lt;numeric-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Two or more numeric expressions</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Returns <tt>TRUE</tt> if the value of each argument is less than that of
+the argument following it; otherwise, returns <tt>FALSE</tt>.
+</dd>
+</dl>
+
+
+
+<a name="&gt;="><h4>8.11. (&gt;= &lt;numeric-expression&gt; &lt;numeric-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Two or more numeric expressions</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Returns <tt>TRUE</tt> if the value of each argument is greater than or
+equal to that of the argument following it; otherwise, returns <tt>FALSE</tt>.
+</dd>
+</dl>
+
+
+
+<a name="abs"><h4>8.12. (abs &lt;numeric-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MathFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One numeric expression</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Returns the absolute value of its only argument.
+</dd>
+</dl>
+
+
+
+
+
+
+<a name="div"><h4>8.40. (div &lt;numeric-expression&gt; &lt;numeric-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MathFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+Two or more numeric expressions</dd>
+
+<dt>Returns:</dt><dd>
+Numbers</dd>
+
+<dt>Description:</dt><dd>
+Returns the first argument divided by all subsequent arguments using integer
+division. Quotient of the values of the two numeric expressions rounded
+to the nearest integer. 
+</dd>
+</dl>
+
+
+
+<a name="e"><h4>8.42. (e)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MathFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Returns the transcendental number <i>e</i>.
+</dd>
+</dl>
+
+
+
+
+<a name="eq"><h4>8.44. (eq &lt;expression&gt; &lt;expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Two or more arbitrary arguments</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Returns <tt>TRUE</tt> if the first argument is equal in type and value
+to all subsequent arguments. For strings, this means identical contents.
+Uses the Java <tt>Object.equals()</tt> function, so can be redefined for
+external types. Note that the integer <tt>2</tt> and the floating-point
+number <tt>2.0</tt> are <i>not</i> <a href="functions.html#eq"><tt>eq</tt></a>, but they are
+<a href="functions.html#eq*"><tt>eq*</tt></a>
+and <a href="functions.html#="><tt>=</tt></a>. 
+</dd>
+</dl>
+
+
+
+<a name="eq*"><h4>8.45. (eq* &lt;expression&gt; &lt;expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Two or more arbitrary arguments</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Returns <tt>TRUE</tt> if the first argument is equivalent to all the others.
+Uses numeric equality for numeric types, unlike <tt>eq</tt>. Note that
+the integer 2 and the floating-point number 2.0 are <i>not</i> <a href="functions.html#eq"><tt>eq</tt></a>,
+but they are <a href="functions.html#eq*"><tt>eq*</tt></a> and <a href="functions.html#="><tt>=</tt></a>.
+</dd>
+</dl>
+
+
+
+
+<a name="exp"><h4>8.49. (exp &lt;numeric-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MathFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One numeric expression</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Raises the value <i>e</i> to the power of its only argument.
+</dd>
+</dl>
+
+
+
+
+<a name="float"><h4>8.57. (float &lt;numeric-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MathFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One numeric expression</dd>
+
+<dt>Returns:</dt><dd>
+Floating-point number</dd>
+
+<dt>Description:</dt><dd>
+Converts its only argument to a float.
+</dd>
+</dl>
+
+
+
+
+<a name="integer"><h4>8.72. (integer &lt;numeric-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MathFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One numeric expression</dd>
+
+<dt>Returns:</dt><dd>
+Integer</dd>
+
+<dt>Description:</dt><dd>
+Converts its only argument to an integer. Truncates any fractional component
+of the value of the given numeric expression and returns the integral part.
+</dd>
+</dl>
+
+
+
+
+<a name="log"><h4>8.83. (log &lt;numeric-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MathFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One numeric expression</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Returns the logarithm base <tt>e</tt> of its only argument.
+</dd>
+</dl>
+
+
+
+<a name="log10"><h4>8.84. (log10 &lt;numeric-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MathFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One numeric expression</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Returns the logarithm base-10 of its only argument. 
+</dd>
+</dl>
+
+
+
+<a name="long"><h4>8.85. (long &lt;expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One expression, either numeric or String</dd>
+
+<dt>Returns:</dt><dd>
+RU.LONG</dd>
+
+<dt>Description:</dt><dd>
+Interprets the expression as a Java long (if possible) and returns a long
+value. Use strings or atoms for precise values that can't be expressed
+as an int. Longs in Jess are "second class citizens" in the sense that you
+can't directly do math on them. You can assign them to variables, pass
+them to function calls, and convert them to Strings or floating-point
+numbers. 
+</dd>
+</dl>
+
+
+
+
+<a name="max"><h4>8.89. (max &lt;numeric-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MathFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One or more numerical expressions</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Returns the value of its largest numeric argument</dd>
+</dl>
+
+
+
+<a name="min"><h4>8.91. (min &lt;numeric-expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MathFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One or more numeric expressions</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Returns the value of its smallest numeric argument.</dd>
+</dl>
+
+
+
+<a name="mod"><h4>8.92. (mod &lt;numeric-expression&gt; &lt;numeric-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Two integer expressions</dd>
+
+<dt>Returns:</dt><dd>
+Integer</dd>
+
+<dt>Description:</dt><dd>
+Returns the remainder of the result of dividing the first argument by its
+second (assuming that the result of the division must be an integer). 
+</dd>
+</dl>
+
+
+
+
+
+<a name="neq"><h4>8.95. (neq &lt;expression&gt; &lt;expression&gt;+)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+Two or more values</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Returns <tt>TRUE</tt> if the first argument is not equal in type and value
+to all subsequent arguments (see <a href="functions.html#eq"><tt>eq</tt></a>). 
+</dd>
+</dl>
+
+
+
+<a name="pi"><h4>8.103. (pi)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MathFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Returns the number <tt>pi</tt>.
+</dd>
+</dl>
+
+
+
+
+
+<a name="random"><h4>8.110. (random)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MathFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Returns a pseudo-random integer between 0 and 65536.
+</dd>
+</dl>
+
+
+
+
+<a name="round"><h4>8.119. (round &lt;numeric-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MathFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One numeric expression</dd>
+
+<dt>Returns:</dt><dd>
+Integer</dd>
+
+<dt>Description:</dt><dd>
+Rounds its argument toward the closest integer or negative infinity if
+exactly between two integers. 
+</dd>
+</dl>
+
+
+
+
+
+<a name="sqrt"><h4>8.138. (sqrt &lt;numeric-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MathFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+A numeric expression</dd>
+
+<dt>Returns:</dt><dd>
+Number</dd>
+
+<dt>Description:</dt><dd>
+Returns the square root of its only argument.
+</dd>
+</dl>
+
+
+<HR width=100%>
+
+</body>
+</html>
+

@@ -1,0 +1,393 @@
+<html>
+<head>
+<title>Jess Interactions Functions</title>
+</head>
+<body>
+
+<h2>Jess Interactions Functions</h2>
+
+List of functions for interacting with Java code.
+
+<P>
+<HR width=100%>
+
+
+
+
+<a name="call"><h4>8.27. (call (&lt;external-address&gt; | &lt;string-expression&gt;) &lt;string-expression&gt; &lt;call-arguments&gt;+)</h4></a><dl>
+<dt>Package:</dt><dd>
+ReflectFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+an external address or String, a String, and any number of additional arguments</dd>
+
+<dt>Returns:</dt><dd>
+(Varies)</dd>
+
+<dt>Description:</dt><dd>
+Calls a Java method on the given object, or a static method of the class
+named by the first argument. The second argument is the name of the method,
+and subsequent arguments are passed to the method. Arguments are promoted
+and overloaded methods selected precisely as for <a href="#new">new</a>.
+The return value is converted to a suitable Jess value before being returned.
+Array return values are converted to multifields.
+
+<p align=""/>The functor <a href="functions.html#call"><tt>call</tt></a> may be omitted if the method being called
+is non-static and the object is represented by a simple variable. The following
+two method calls are equivalent:
+<pre>        
+        ;; These are legal and equivalent
+        (call ?vector addElement (new java.lang.String "Foo"))
+        (?vector addElement (new java.lang.String "Foo"))
+</pre>
+
+<a href="functions.html#call"><tt>call</tt></a> may not be omitted if the object comes from the return value
+of another function call:
+<pre>
+        ;; This is illegal
+        ((new java.lang.Vector 10) addElement (new java.lang.String "Foo"))
+</pre>
+</dd>
+</dl>
+
+
+
+<a name="context"><h4>8.33. (context)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+ReflectFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+None</dd>
+
+<dt>Returns:</dt><dd>
+External address</dd>
+
+<dt>Description:</dt><dd>
+Returns the execution context (a jess.Context object) it is called
+in. This provides a way for deffunctions to get a handle to this
+useful class.
+</dd>
+</dl>
+
+
+
+<a name="defclass"><h4>8.37. (defclass &lt;tag&gt; &lt;Java class name&gt; [extends &lt;tag&gt;])</h4></a><dl>
+
+<dt>Package:</dt><dd>ReflectFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+Two or four atoms, as noted above</dd>
+
+<dt>Returns:</dt><dd>
+The second argument</dd>
+
+<dt>Description:</dt><dd>
+Defines a <tt>deftemplate</tt> with the given tag, with slots
+based on the Java Beans properties found in the named class. If the
+optional extends clause is included, the second tag will become the
+parent template of the new template. The common slots in the two
+templates will be in the same order, at the beginning of the new
+template. Rules defined to match instances of the parent template will
+also match instances of the new child template.
+</dd>
+</dl>
+
+
+
+<a name="definstance"><h4>8.38. (definstance &lt;tag&gt; &lt;Java object&gt; [static | dynamic] )</h4></a><dl>
+
+<dt>Package:</dt><dd>
+ReflectFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+An atom, a Java object, and (optionally) one of the atoms
+static or dynamic.</dd>
+
+<dt>Returns:</dt><dd>
+The fact-id of the new shadow fact.</dd>
+
+<dt>Description:</dt><dd>
+Creates a "shadow fact" representing the given Java object,
+according to the named deftemplate (which should have come from
+<a href="functions.html#defclass"><tt>defclass</tt></a>.) If the atom
+<tt>static</tt> is not supplied as the optional third argument, a
+<tt>PropertyChangeListener</tt> is installed in the given object, so
+that Jess can keep the shadow fact updated if the object's properties
+change. 
+<p align=""/> Note that it is an error for a given Java object to be installed
+in more than one <a href="functions.html#definstance"><tt>definstance</tt></a> at a time. The second and subsequent
+<a href="functions.html#definstance"><tt>definstance</tt></a> calls for a given object will return a fact-id
+with value -1.
+</dd>
+</dl>
+
+
+
+<a name="get"><h4>8.62. (get &lt;external-address&gt; &lt;string-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+ReflectFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+An external address and a string.</dd>
+
+<dt>Returns:</dt><dd>
+(Varies)</dd>
+
+<dt>Description:</dt><dd>
+Retrieves the value of a Java Bean's property. The first argument is the
+object and the second argument is the name of the property. The return
+value is converted to a suitable Jess value exactly as for <a href="#call">call.</a></dd>
+</dl>
+
+
+
+<a name="get-member"><h4>8.63. (get-member (&lt;external-address&gt; | &lt;string-expression&gt;) &lt;string-expression&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+reflect,ReflectFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+An external address or a string, and a string.</dd>
+
+<dt>Returns:</dt><dd>
+(Varies)</dd>
+
+<dt>Description:</dt><dd>
+Retrieves the value of a Java object's data member. The first argument
+is the object (or the name of a class, for a static member) and the second
+argument is the name of the field. The return value is converted to a suitable
+Jess value exactly as for <a href="#call">call.</a></dd>
+</dl>
+
+
+<a name="import"><h4>8.70. (import &lt;atom&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+ReflectFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One atom</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+Works like the Java <tt>import</tt> statement. You can import either a
+whole package using
+<pre>
+     (import java.io.*)
+</pre>
+or a single class using
+<pre>
+     (import java.awt.Button)
+</pre>
+After that, all functions that can accept a Java class name (<a href="functions.html#new"><tt>new</tt></a>,
+<a href="functions.html#defclass"><tt>defclass</tt></a>, <a href="functions.html#call"><tt>call</tt></a>, etc)
+will refer to the import list 
+to try to find the class that goes with a specific name. Note that
+<tt>java.lang.*</tt> is now implicitly imported.
+
+</dd>
+</dl>
+
+
+
+<a name="load-function"><h4>8.81. (load-function &lt;class-name&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One string or atom representing the name of a Java class</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+The argument must be the fully-qualified name of a Java class that implements
+the Userfunction interface. The class is loaded in to Jess and added to
+the engine, thus making the corresponding command available. See
+<a href="extending.html">Extending Jess with Java</a> for more
+information.</dd> 
+</dl>
+
+
+
+<a name="load-package"><h4>8.82. (load-package &lt;class-name&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+MiscFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+One string or atom, the name of a Java class</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+The argument must be the fully-qualified name of a Java class that implements
+the Userpackage interface. The class is loaded in to Jess and added to
+the engine, thus making the corresponding package of commands available.
+See <a href="extending.html">Extending Jess with Java</a> for more information.</dd>
+</dl>
+
+
+
+
+<a name="new"><h4>8.96. (new &lt;string-expression&gt; &lt;new-arguments&gt;+)</h4></a><dl>
+<dt>Package:</dt><dd>
+ReflectFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+A string and one or more arguments</dd>
+
+<dt>Returns:</dt><dd>
+Boolean</dd>
+
+<dt>Description:</dt><dd>
+Creates a new Java object and returns an <tt>EXTERNAL_ADDRESS</tt> value
+containing it. The first argument is the fully-qualified class name: <tt>java.util.Vector</tt>,
+for example. The second and later arguments are constructor arguments.
+The constructor will be chosen from among all constuctors for the named
+class based on a <i>first-best fit</i> algorithm. Built-in Jess types are
+converted as necessary to match available constructors. See the text for
+more details.</dd>
+</dl>
+
+
+
+<a name="set"><h4>8.125. (set &lt;external-address&gt; &lt;string-expression&gt; &lt;expression&gt;)</h4></a><dl>
+<dt>Package:</dt><dd>
+ReflectFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+An external address, a string, and an expression</dd>
+
+<dt>Returns:</dt><dd>
+The last argument</dd>
+
+<dt>Description:</dt><dd>
+Sets a Java Bean's property to the given value. The first argument is the
+Bean object; the second argument is the name of the property. The third
+value is the new value for the property; the same conversions are applied
+as for <a href="functions.html#new"><tt>new</tt></a> and <a href="functions.html#call"><tt>call</tt></a>.</dd>
+</dl>
+
+
+
+
+<a name="set-member"><h4>8.127. (set-member (&lt;external-address&gt; | &lt;string-expression&gt;) &lt;string&gt; &lt;expression&gt;+)</h4></a><dl>
+<dt>Package:</dt><dd>
+ReflectFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+An external address or a string, a string, and one or more expressions</dd>
+
+<dt>Returns:</dt><dd>
+The last argument</dd>
+
+<dt>Description:</dt><dd>
+Sets a Java object's member variable to the given value. The first argument
+is the object (or the name of the class, in the case of a static member
+variable). The second argument is the name of the variable. The third value
+is the new value for the variable; the same conversions are applied as
+for <a href="functions.html#new"><tt>new</tt></a> and <a href="functions.html#call"><tt>call</tt></a>.</dd>
+</dl>
+
+
+
+<a name="throw"><h4>8.151. (throw &lt;java-object&gt;)</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+A Java object that must inherit from java.lang.Throwable</dd>
+
+<dt>Returns:</dt><dd>
+Does not return</dd>
+
+<dt>Description:</dt><dd>
+Throws the given exception object. If the object is a
+<tt>JessException</tt>, throws it directly. If the object is some
+other type of exception, it is wrapped in a <tt>JessException</tt>
+before throwing. The object's  stack trace is filled in such that the
+exception will appear to have been created by the <a href="functions.html#throw"><tt>throw</tt></a>
+function.
+</dd>
+</dl>
+
+
+<a name="try"><h4>8.153. (try &lt;expression&gt;* [catch &lt;expression&gt;*] [finally &lt;expression&gt;*])</h4></a><dl>
+
+<dt>Package:</dt><dd>
+Intrinsics</dd>
+
+<dt>Arguments:</dt><dd>
+One or more expressions, followed optionally by the atom catch followed by zero
+or more expressions, followed optionally by the atom finally followed by zero
+or more expressions. Either the catch, or the finally, or both must be
+included. 
+</dd>
+<dt>Returns:</dt><dd>(Varies)</dd>
+
+<dt>Description:</dt><dd>
+This command works something like Java <tt>try</tt> with a few simplifications.
+The biggest difference is that the <tt>catch</tt> clause can specify neither
+a type of exception nor a variable to receive the exception object. All
+exceptions occurring in a <a href="functions.html#try"><tt>try</tt></a> block are routed to the single
+<tt>catch</tt> block. The variable <tt>?ERROR</tt> is made to point to
+the exception object as an <tt>EXTERNAL_ADDRESS</tt>. For example:
+
+<pre>
+    (try
+      (open NoSuchFile.txt r)
+     catch
+      (printout t (call ?ERROR toString) crlf))
+</pre>
+
+prints
+
+<pre>
+   Rete Exception in routine _open::call.
+     Message: I/O Exception java.io.FileNotFoundException: NoSuchFile.txt.
+</pre>
+
+<p align=""/>An empty <tt>catch</tt> block is fine. It just signifies ignoring possible
+errors.
+<p align=""/>The code in the <tt>finally</tt> block, if present, is executed
+after all try and/or catch code has executed, immediately before the
+<a href="functions.html#"><tt>try</tt></a> function returns.
+
+</dd>
+</dl>
+
+
+
+<a name="undefinstance"><h4>8.155. (undefinstance (&lt;java-object&gt; | * ))</h4></a><dl>
+
+<dt>Package:</dt><dd>
+ReflectFunctions</dd>
+
+<dt>Arguments:</dt><dd>
+A Javaobject, or the atom *</dd>
+
+<dt>Returns:</dt><dd>
+TRUE</dd>
+
+<dt>Description:</dt><dd>
+If the object currently has a shadow fact, it is removed from the
+knowledge base. Furthermore, if the object has a
+<tt>PropertyChangeListener</tt> installed, this is removed as well. If
+the argument is "*" this is done for all <a href="functions.html#definstance"><tt>definstance</tt></a>s.
+</dd>
+</dl>
+
+
+<HR width=100%>
+
+</body>
+</html>
+

@@ -1,0 +1,216 @@
+
+import java.util.*;
+import java.io.*;
+import java.awt.*;
+import java.lang.Math;
+
+ 
+
+public class DecisionTree {
+ String name ;
+ static DataSet ds ;
+ Variable classVar ; // the class Variable
+ Hashtable variableList ;
+
+ Vector ruleList ;           // list of all rules
+ Vector conclusionVarList ;  // queue of variables
+ Vector examples ;
+ int fieldsPerRec;
+ static TextArea textArea1 ;
+
+ static public void appendText(String text) { textArea1.appendText(text);}
+ String record[] ;  // one record of train/test data in string format
+
+ DecisionTree(String Name) {
+    name = Name;
+ }
+
+
+public boolean identical(Vector examples, Variable variable)
+ {
+   int index = variable.column ;
+   Enumeration enum = examples.elements() ;
+   boolean same = true ;
+   String value = ((String[])examples.firstElement())[index] ;
+   while(enum.hasMoreElements()) {
+      if (value.equals(((String[])enum.nextElement())[index])) continue ;
+      else { same = false ; break ; }
+   }
+   return same;
+
+ }
+
+ public String majority(Vector examples)
+ {
+   int index = classVar.column ;
+   Enumeration enum = examples.elements() ;
+   int counts[] = new int[classVar.labels.size()] ;
+
+   while(enum.hasMoreElements()) {
+      String value = ((String[])enum.nextElement())[index];
+      int inx = ((Variable)classVar).getIndex(value) ;
+      counts[inx]++;
+   } /* enbwhile */
+
+   int maxVal = 0 ;
+   int maxIndex = 0 ;
+   for(int i=0 ; i < classVar.labels.size() ; i++) {
+     if (counts[i] > maxVal) {
+        maxVal = counts[i] ;
+        maxIndex = i ;
+     } /* endif */
+   } /* endfor */
+   return classVar.getLabel(maxIndex);
+ }
+
+ public int[] getCounts(Vector examples)
+ {
+   int index = classVar.column ;
+   Enumeration enum = examples.elements() ;
+   int counts[] = new int[classVar.labels.size()] ;
+
+   while(enum.hasMoreElements()) {
+      String value = ((String[])enum.nextElement())[index];
+      int inx = ((Variable)classVar).getIndex(value);
+      counts[inx]++;
+   } /* enbwhile */
+
+   return counts;
+ }
+
+ // compute information content, given # of pos and neg examples
+ double computeInfo(int p, int n) {
+
+  double total = p + n ;
+  double pos = p / total ;
+  double neg = n / total;
+  double temp;
+  if ((p ==0) || (n == 0)) {
+    temp = 0.0 ;
+  } else {
+   temp = (-1.0 * (pos * Math.log(pos)/Math.log(2))) -
+                        (neg * Math.log(neg)/Math.log(2)) ;
+  }
+//  textArea1.appendText("Info( " + pos + ", " + neg + ") = " + temp) ;
+  return temp ;
+ }
+
+ double computeRemainder(Variable variable, Vector examples)
+ {
+   int positive[] = new int[variable.labels.size()] ;
+   int negative[] = new int[variable.labels.size()] ;
+   int index = variable.column ;
+   int classIndex = classVar.column ;
+   double sum = 0 ;
+   double numValues = variable.labels.size() ;
+   double numRecs = examples.size() ;
+
+   for( int i=0 ; i < numValues ; i++) {
+     String value = variable.getLabel(i); // get discrete value
+
+     Enumeration enum = examples.elements() ;
+     while (enum.hasMoreElements()) {
+       String record[] = (String[])enum.nextElement() ; // get next record
+       if (record[index].equals(value)) {
+        if (record[classIndex].equals("yes")) {
+            positive[i]++ ;
+        } else  {
+            negative[i]++;
+        }
+       }
+     } /* endwhile */
+     double weight = (positive[i]+negative[i]) / numRecs;
+     double myrem = weight * computeInfo(positive[i], negative[i]);
+     sum = sum + myrem ;
+  //   textArea1.appendText("Computing rem for value " + value + " = " + myrem + " weight = " + weight);
+   } /* endfor */
+
+//   textArea1.appendText("Remainder for " + variable.name + " = " + sum) ;
+   return sum ;
+ }
+
+ // return a subset of examples with (variableName = value)
+ Vector subset(Vector examples, Variable variable, String value)
+ {
+   int index = variable.column ;
+   Enumeration enum = examples.elements() ;
+   Vector matchingExamples = new Vector() ;
+
+   while(enum.hasMoreElements()) {
+      String[] record = (String[])enum.nextElement() ;
+      if (value.equals(record[index])) {
+        matchingExamples.addElement(record) ;
+      }
+   }
+   textArea1.appendText("\n Subset - there are " +
+                      matchingExamples.size() +
+                      " records with " +
+                      variable.name + " = " + value) ;
+
+   return matchingExamples;
+ }
+
+ // return the variable with most gain
+ Variable chooseVariable(Hashtable variables, Vector examples)
+ {
+   Enumeration enum = variables.elements() ;
+   double gain = 0.0, bestGain = 0.0 ;
+   Variable best = null ;
+
+   int counts[] ;
+   counts = getCounts(examples) ;
+   int pos = counts[0] ;
+   int neg = counts[1] ;
+   double info = computeInfo(pos, neg);
+   textArea1.appendText("\nInfo = " + info ) ;
+
+   while(enum.hasMoreElements()) {
+      Variable tempVar = (Variable)enum.nextElement() ;
+      gain = info - computeRemainder(tempVar, examples);
+      textArea1.appendText("\n" + tempVar.name + " gain = " + gain) ;
+      if (gain > bestGain) {
+        bestGain = gain ;
+        best = tempVar;
+      }
+   }
+   textArea1.appendText("\nChoosing best variable: " + best.name) ;
+   return best;  //
+
+ }
+
+ public Node buildDecisionTree(Vector examples,
+                                      Hashtable variables,
+                                      Node defaultValue)
+ {
+
+ Node tree = new Node() ;
+
+ if (examples.size() == 0) return defaultValue ;
+ else if (identical(examples, classVar))
+        return new Node(((String[])examples.firstElement())[classVar.column]) ;
+ else if (variables.size() == 0)
+        return new Node(majority(examples)) ;
+ else {
+    Variable best = chooseVariable(variables, examples);
+    tree = new Node(best.name) ;   // should be variable with most Gain
+    Enumeration enum = best.labels.elements();
+    int numValues = best.labels.size();
+    for (int i=0 ; i < numValues; i++) {
+        Vector examples1 = subset(examples, best, best.getLabel(i)) ;
+        Hashtable variables1 = (Hashtable)variables.clone();
+        variables1.remove(best) ;
+        Node subTree = buildDecisionTree( examples1,variables1,
+                                         new Node(majority(examples1)));
+        tree.addChild(subTree, best.name + "=" + best.getLabel(i) ) ;
+    } /* endfor */
+ }
+    return tree ;
+ }
+
+
+ 
+}
+
+
+
+
