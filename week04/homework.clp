@@ -157,7 +157,7 @@
 (defrule MAIN::FULL8LJUG
     ?node <- (status
         (search-depth ?num)
-        (jugs ?x&:(< ?x 8) ?y ?z)
+        (jugs ?x&:(< ?x 8) ?y&:(neq ?y 5) ?z&:(neq ?z 3))
     )
     =>
     (duplicate ?node
@@ -172,7 +172,7 @@
 (defrule MAIN::FULL5LJUG
     ?node <- (status
         (search-depth ?num)
-        (jugs ?x ?y&:(< ?y 5) ?z)
+        (jugs ?x&:(neq ?x 8) ?y&:(< ?y 5) ?z&:(neq ?z 3))
     )
     =>
     (duplicate ?node
@@ -188,7 +188,7 @@
 (defrule MAIN::FULL3LJUG
     ?node <- (status
         (search-depth ?num)
-        (jugs ?x ?y ?z&:(< ?z 3))
+        (jugs ?x&:(neq ?x 8) ?y&:(neq ?y 5) ?z&:(< ?z 3))
     )
     =>
     (duplicate ?node
@@ -203,7 +203,7 @@
 (defrule MAIN::EMPTY8LJUG
     ?node <- (status
         (search-depth ?num)
-        (jugs ?x&:(> ?x 0) ?y ?z)
+        (jugs ?x&:(= ?x 8) ?y&:(> ?y 0) ?z&:(> ?z 0))
     )
     =>
     (duplicate ?node
@@ -218,7 +218,7 @@
 (defrule MAIN::EMPTY5LJUG
     ?node <- (status
         (search-depth ?num)
-        (jugs ?x ?y&:(> ?y 0) ?z)
+        (jugs ?x&:(> ?x 0) ?y&:(= ?y 5) ?z&:(> ?z 0))
     )
     =>
     (duplicate ?node
@@ -233,7 +233,7 @@
 (defrule MAIN::EMPTY3LJUG
     ?node <- (status
         (search-depth ?num)
-        (jugs ?x ?y ?z&:(> ?z 0))
+        (jugs ?x&:(> ?x 0) ?y&:(> ?y 0) ?z&:(= ?z 3))
     )
     =>
     (duplicate ?node
@@ -248,7 +248,7 @@
 (defrule MAIN::POUR8Lto5L
     ?node <- (status
         (search-depth ?num)
-        (jugs ?x&:(and (> ?x 0) (>= (+ ?x ?y) 5)) ?y&:(< ?y 5) ?z&:(< ?z 3))
+        (jugs ?x&:(and (> ?x 0) (>= (+ ?x ?y) 5)) ?y&:(and (> ?x 0) (< ?y 5)) ?z&:(< ?z 3))
     )
     =>
     (bind ?x (- ?x (- 5 ?y)))
@@ -264,7 +264,7 @@
 (defrule MAIN::POUR8Lto3L
     ?node <- (status
         (search-depth ?num)
-        (jugs ?x&:(and (> ?x 0) (>= (+ ?x ?z) 3)) ?y&:(< ?y 5) ?z&:(< ?z 3))
+        (jugs ?x&:(and (> ?x 0) (>= (+ ?x ?z) 3)) ?y&:(< ?y 5) ?z&:(and (> ?z 0) (< ?z 3)))
     )
     =>
     (bind ?x (- ?x (- 3 ?z)))
@@ -280,7 +280,7 @@
 (defrule MAIN::POUR5Lto8L
     ?node <- (status
         (search-depth ?num)
-        (jugs ?x&:(< ?x 8) ?y&:(and (> ?y 0) (>= (+ ?y ?x) 8)) ?z&:(< ?z 3))
+        (jugs ?x&:(and (> ?x 0)(< ?x 8)) ?y&:(and (> ?y 0) (>= (+ ?y ?x) 8)) ?z&:(< ?z 3))
     )
     =>
     (bind ?y (- ?y (- 8 ?x)))
@@ -296,7 +296,7 @@
 (defrule MAIN::POUR5Lto3L
     ?node <- (status
         (search-depth ?num)
-        (jugs ?x&:(< ?x 8) ?y&:(and (> ?y 0) (>= (+ ?y ?z) 3)) ?z&:(< ?z 3))
+        (jugs ?x&:(< ?x 8) ?y&:(and (> ?y 0) (>= (+ ?y ?z) 3)) ?z&:(and (> ?z 0) (< ?z 3)))
     )
     =>
     (bind ?y (- ?y (- 3 ?z)))
@@ -312,7 +312,7 @@
 (defrule MAIN::POUR3Lto8L 
     ?node <- (status
         (search-depth ?num)
-        (jugs ?x&:(< ?x 8) ?y&:(< ?y 5) ?z&:(and (> ?z 0) (>= (+ ?z ?x) 8)))
+        (jugs ?x&:(and (> ?x 0)(< ?x 8)) ?y&:(< ?y 5) ?z&:(and (> ?z 0) (>= (+ ?z ?x) 8)))
     )
     =>
     (bind ?z (- ?z (- 8 ?x)))
@@ -329,7 +329,7 @@
 (defrule MAIN::POUR3Lto5L
     ?node <- (status
         (search-depth ?num)
-        (jugs ?x&:(< ?x 8) ?y&:(< ?y 5) ?z&:(and (> ?z 0) (>= (+ ?z ?y) 5)))
+        (jugs ?x&:(< ?x 8) ?y&:(and (> ?y 0)(< ?y 5)) ?z&:(and (> ?z 0) (>= (+ ?z ?y) 5)))
     )
     =>
     (bind ?z (- ?z (- 5 ?y)))
@@ -484,7 +484,7 @@
         (parent ?parent)
         (last-move ?move)
     )
-    ?mv <- (moves (id ?node)(moves-list $?rest))
+    ?mv <- (moves (id ?node) (moves-list rest$))
     =>
     (modify ?mv (id ?parent) (moves-list ?move ?rest) )
 )
@@ -509,7 +509,6 @@
         (printout t "thing : [" ?thing "]."  crlf)
         (bind ?i (+ 1 ?i))
     )
-    (halt)
 )
  
 (reset)
