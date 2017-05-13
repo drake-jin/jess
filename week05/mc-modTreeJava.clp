@@ -207,7 +207,10 @@
 
 (defrule CONSTRAINTS::circular-path
     (declare (auto-focus TRUE))
-    (status (search-depth ?sd1) (mcb ?m ?c ?b))
+    (status 
+        (search-depth ?sd1) 
+        (mcb ?m ?c ?b)
+    )
     ?node <- (status (search-depth ?sd2&:(< ?sd1 ?sd2)) (mcb ?m ?c ?b))
     =>
     (retract ?node)
@@ -244,6 +247,7 @@
 (defrule SOLUTION::print-solution
     ?mv <- (moves (id root) (moves-list no-move $?m))
     =>
+    (printout t "뀨:" $?m crlf)
     (retract ?mv)
     (printout t "무사히 건너 갔어요!!" crlf)
     (bind ?length (length$ ?m))
